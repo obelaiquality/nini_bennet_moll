@@ -1,6 +1,6 @@
 title: My Book Nook
-baseurl: ""
-url: "https://obelaiquality.github.io/nini_bennet_moll"
+baseurl: "/nini_bennet_moll"
+url: "https://obelaiquality.github.io"
 collections:
   posts:
     output: true
