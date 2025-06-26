@@ -2,7 +2,7 @@ backend:
   # Use the GitHub backend so the CMS can commit directly to your repository
   # Replace "yourusername" and "yourrepo" with your actual GitHub details
   name: github
-  repo: yourusername/nini_bennet_moll
+  repo: obelaiquality/nini_bennet_moll
   branch: main
 
 # Use the remote Git backend when editing through Netlify CMS
