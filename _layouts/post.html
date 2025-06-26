@@ -3,11 +3,17 @@ layout: default
 ---
 <article class="review">
   <h2>{{ page.title }}</h2>
-  <p><em>Posted on {{ page.date | date: '%B %d, %Y' }}</em></p>
+  <p class="meta">by {{ page.author }} — {{ page.date | date: '%B %d, %Y' }}</p>
+  {% if page.author_bio %}
+    <p class="author-bio">{{ page.author_bio }}</p>
+  {% endif %}
   {% if page.cover %}
     <img src="{{ site.baseurl }}{{ page.cover }}" alt="{{ page.title }} cover" class="cover">
   {% endif %}
   <div class="content">
     {{ content }}
   </div>
+  {% if page.tags %}
+    <p class="tags">Tags: {{ page.tags | array_to_sentence_string }}</p>
+  {% endif %}
 </article>

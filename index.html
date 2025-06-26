@@ -5,13 +5,36 @@ title: Home
 <h1>Welcome to My Book Nook 🌟</h1>
 <p>A cosy little place where I share thoughts on books I love.</p>
 
+<div class="filters">
+  <input type="text" id="search" placeholder="Search reviews...">
+  <select id="author-filter">
+    <option value="">All Authors</option>
+    {% assign authors = site.posts | map: "author" | uniq | sort %}
+    {% for author in authors %}
+      <option value="{{ author }}">{{ author }}</option>
+    {% endfor %}
+  </select>
+  <select id="tag-filter">
+    <option value="">All Topics</option>
+    {% assign all_tags = "" | split: "" %}
+    {% for post in site.posts %}
+      {% assign all_tags = all_tags | concat: post.tags %}
+    {% endfor %}
+    {% assign unique_tags = all_tags | uniq | sort %}
+    {% for tag in unique_tags %}
+      <option value="{{ tag }}">{{ tag }}</option>
+    {% endfor %}
+  </select>
+</div>
+
 {% for post in site.posts %}
-<article class="review">
+<article class="review" data-author="{{ post.author }}" data-tags="{{ post.tags | join: ',' }}" data-date="{{ post.date | date_to_xmlschema }}" data-excerpt="{{ post.excerpt | strip_html | escape }}">
   <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
   <p class="meta">by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}</p>
   {% if post.cover %}
     <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" class="cover">
   {% endif %}
+  <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
   <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
   <a href="{{ site.baseurl }}{{ post.url }}" class="btn">Read More</a>
 </article>

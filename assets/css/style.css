@@ -1,8 +1,8 @@
 body {
-  font-family: 'Georgia', serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   background: #f4f1ea;
   color: #333;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -55,5 +55,28 @@ a:hover {
 .meta {
   color: #555;
   font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.author-bio {
+  font-style: italic;
+  margin-bottom: 1rem;
+  color: #444;
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.filters input,
+.filters select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.tags {
+  font-size: 0.85rem;
+  color: #666;
   margin-bottom: 0.5rem;
 }
