@@ -1,0 +1,6 @@
+title: My Book Nook
+baseurl: ""
+url: "https://yourusername.github.io/tannie-book-reviews"
+collections:
+  posts:
+    output: true

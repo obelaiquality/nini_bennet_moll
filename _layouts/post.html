@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<article class="review">
+  <h2>{{ page.title }}</h2>
+  <p><em>Posted on {{ page.date | date: '%B %d, %Y' }}</em></p>
+  {% if page.cover %}
+    <img src="{{ page.cover }}" alt="{{ page.title }} cover" class="cover">
+  {% endif %}
+  <div class="content">
+    {{ content }}
+  </div>
+</article>
