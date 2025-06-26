@@ -34,3 +34,4 @@ correctly on GitHub Pages.
 - Filter posts by author or tags directly on the homepage.
 - Optional author biography section per review.
 - Netlify CMS configuration updated to support tags and author bios.
+
