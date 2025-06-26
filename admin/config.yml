@@ -10,7 +10,7 @@ backend:
 publish_mode: editorial_workflow
 
 media_folder: "assets/images"
-public_folder: "/assets/images"
+public_folder: "/nini_bennet_moll/assets/images"
 
 collections:
   - name: "posts"
