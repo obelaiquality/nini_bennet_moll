@@ -4,10 +4,15 @@ title: Home
 ---
 <h1>Welcome to My Book Nook 🌟</h1>
 <p>A cosy little place where I share thoughts on books I love.</p>
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }} ({{ post.date | date: '%Y-%m-%d' }})</a>
-    </li>
-  {% endfor %}
-</ul>
+
+{% for post in site.posts %}
+<article class="review">
+  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+  <p class="meta">by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}</p>
+  {% if post.cover %}
+    <img src="{{ post.cover }}" alt="{{ post.title }} cover" class="cover">
+  {% endif %}
+  <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
+  <a href="{{ post.url }}" class="btn">Read More</a>
+</article>
+{% endfor %}
