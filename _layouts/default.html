@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+  <script>var quotes = {{ site.data.quotes | jsonify }};</script>
   <script defer src="{{ site.baseurl }}/assets/js/main.js"></script>
 </head>
 <body>
@@ -12,6 +13,7 @@
     <nav>
       <a href="{{ site.baseurl }}/">Home</a> |
       <a href="{{ site.baseurl }}/admin/">Admin</a>
+      <button id="dark-toggle">🌙</button>
     </nav>
   </header>
   <div class="container">

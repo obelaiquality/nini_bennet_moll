@@ -20,6 +20,13 @@ body {
   margin-left: 0.5rem;
   font-size: 1rem;
 }
+.site-header nav button {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 .cover {
   max-width: 100%;
   border-radius: 8px;
@@ -75,8 +82,36 @@ a:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.rating {
+  color: #d4a373;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.featured-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.featured-item {
+  min-width: 150px;
+}
+.dark body {
+  background: #1e1e1e;
+  color: #eee;
+}
+.dark .review {
+  background-color: #2c2c2c;
+  border-color: #444;
+}
+.dark a {
+  color: #d4a373;
+}
 .tags {
   font-size: 0.85rem;
   color: #666;
   margin-bottom: 0.5rem;
+}
+.summary {
+  margin-bottom: 1.5rem;
 }

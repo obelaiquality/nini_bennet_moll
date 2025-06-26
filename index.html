@@ -4,6 +4,27 @@ title: Home
 ---
 <h1>Welcome to My Book Nook 🌟</h1>
 <p>A cosy little place where I share thoughts on books I love.</p>
+<blockquote id="quote-of-the-day"></blockquote>
+
+<div class="featured-carousel">
+  {% for post in site.posts %}
+    {% if post.featured %}
+    <div class="featured-item">
+      <a href="{{ site.baseurl }}{{ post.url }}">
+        {% if post.cover %}
+          <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" loading="lazy">
+        {% endif %}
+        <h3>{{ post.title }}</h3>
+      </a>
+    </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<div class="summary">
+  <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
+  <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
+</div>
 
 <div class="filters">
   <input type="text" id="search" placeholder="Search reviews...">
@@ -25,14 +46,37 @@ title: Home
       <option value="{{ tag }}">{{ tag }}</option>
     {% endfor %}
   </select>
+  <select id="genre-filter">
+    <option value="">All Genres</option>
+    {% assign genres = site.posts | map: "genre" | uniq | sort %}
+    {% for g in genres %}
+      <option value="{{ g }}">{{ g }}</option>
+    {% endfor %}
+  </select>
+  <select id="rating-filter">
+    <option value="">All Ratings</option>
+    {% for r in "0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5" | split: "," %}
+      <option value="{{ r }}">{{ r }}+</option>
+    {% endfor %}
+  </select>
+  <select id="year-filter">
+    <option value="">All Years</option>
+    {% assign years = site.posts | map: "publication_date" | map: "date" | map: "year" | uniq | sort %}
+    {% for y in years %}
+      <option value="{{ y }}">{{ y }}</option>
+    {% endfor %}
+  </select>
 </div>
 
 {% for post in site.posts %}
-<article class="review" data-author="{{ post.author }}" data-tags="{{ post.tags | join: ',' }}" data-date="{{ post.date | date_to_xmlschema }}" data-excerpt="{{ post.excerpt | strip_html | escape }}">
+<article class="review" data-author="{{ post.author }}" data-tags="{{ post.tags | join: ',' }}" data-date="{{ post.date | date_to_xmlschema }}" data-genre="{{ post.genre }}" data-rating="{{ post.rating }}" data-year="{{ post.publication_date | date: '%Y' }}" data-excerpt="{{ post.excerpt | strip_html | escape }}"> 
   <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
   <p class="meta">by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}</p>
   {% if post.cover %}
-    <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" class="cover">
+    <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" class="cover" loading="lazy">
+  {% endif %}
+  {% if post.rating %}
+    <p class="rating" data-rating="{{ post.rating }}"></p>
   {% endif %}
   <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
   <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
