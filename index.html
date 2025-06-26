@@ -13,13 +13,22 @@ title: Home
     </div>
   </section>
 
-  <blockquote id="quote-of-the-day"></blockquote>
+  <blockquote id="quote-of-the-day">
+    <img src="{{ site.baseurl }}/assets/icons/quote.svg"
+         alt="Quote icon"
+         class="icon">
+  </blockquote>
 </div>
 
 <div class="page-content">
   <aside class="sidebar">
     <div class="filters">
-      <input type="text" id="search" placeholder="Search reviews…">
+      <div class="search-wrapper">
+        <img src="{{ site.baseurl }}/assets/icons/search.svg"
+             alt="Search"
+             class="icon">
+        <input type="text" id="search" placeholder="Search reviews…">
+      </div>
 
       <select id="author-filter">
         <option value="">All Authors</option>
@@ -67,7 +76,6 @@ title: Home
   </aside>
 
   <main class="reviews">
-    <!-- Featured carousel -->
     <div class="featured-carousel">
       {% for post in site.posts %}
         {% if post.featured %}
@@ -85,18 +93,16 @@ title: Home
       {% endfor %}
     </div>
 
-    <!-- Top authors / genres summary -->
     <div class="summary">
       <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
       <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
     </div>
 
-    <!-- All non-featured reviews -->
     {% for post in site.posts %}
       {% unless post.featured %}
         <article class="review"
                  data-author="{{ post.author }}"
-                 data-tags="{{ post.tags | join: ',' }}"
+                 data-tags="{{ post.tags | join:',' }}"
                  data-genre="{{ post.genre }}"
                  data-rating="{{ post.rating }}"
                  data-year="{{ post.publication_date | date: '%Y' }}"
@@ -118,17 +124,23 @@ title: Home
           {% endif %}
 
           {% if post.rating %}
-            <p class="rating" data-rating="{{ post.rating }}"></p>
+            <p class="rating" data-rating="{{ post.rating }}">
+              <img src="{{ site.baseurl }}/assets/icons/star.svg"
+                   alt="Star"
+                   class="icon">
+              {{ post.rating }}
+            </p>
           {% endif %}
 
           {% if post.tags %}
-            <p class="tags">
-              {{ post.tags | array_to_sentence_string }}
-            </p>
+            <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
           {% endif %}
 
           <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
           <a href="{{ site.baseurl }}{{ post.url }}" class="btn">
+            <img src="{{ site.baseurl }}/assets/icons/arrow-right.svg"
+                 alt=""
+                 class="icon">
             Read More
           </a>
         </article>
