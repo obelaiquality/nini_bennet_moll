@@ -9,13 +9,34 @@
 </head>
 <body>
   <header class="site-header">
-    <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
+    <h1>
+      <a href="{{ site.baseurl }}/">
+        <img src="{{ site.baseurl }}/assets/icons/home.svg"
+             alt="Home"
+             class="icon">
+        {{ site.title }}
+      </a>
+    </h1>
     <nav>
-      <a href="{{ site.baseurl }}/">Home</a> |
-      <a href="{{ site.baseurl }}/admin/">Admin</a>
-      <button id="dark-toggle">🌙</button>
+      <a href="{{ site.baseurl }}/">
+        <img src="{{ site.baseurl }}/assets/icons/home.svg"
+             alt="Home"
+             class="icon">
+        Home
+      </a>
+      |
+      <a href="{{ site.baseurl }}/admin/">
+        <img src="{{ site.baseurl }}/assets/icons/filter.svg"
+             alt="Admin"
+             class="icon">
+        Admin
+      </a>
+      <button id="dark-toggle" title="Toggle dark mode">
+        🌙
+      </button>
     </nav>
   </header>
+
   <div class="container">
     {{ content }}
   </div>
