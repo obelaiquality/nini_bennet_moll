@@ -4,3 +4,6 @@ url: "https://obelaiquality.github.io"
 collections:
   posts:
     output: true
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap

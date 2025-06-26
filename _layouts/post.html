@@ -8,12 +8,37 @@ layout: default
     <p class="author-bio">{{ page.author_bio }}</p>
   {% endif %}
   {% if page.cover %}
-    <img src="{{ site.baseurl }}{{ page.cover }}" alt="{{ page.title }} cover" class="cover">
+    <img src="{{ site.baseurl }}{{ page.cover }}" alt="{{ page.title }} cover" class="cover" loading="lazy">
+  {% endif %}
+  {% if page.rating %}
+    <p class="rating" data-rating="{{ page.rating }}"></p>
   {% endif %}
   <div class="content">
     {{ content }}
   </div>
   {% if page.tags %}
     <p class="tags">Tags: {{ page.tags | array_to_sentence_string }}</p>
-  {% endif %}
+{% endif %}
 </article>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "Book",
+    "name": "{{ page.title }}",
+    "author": "{{ page.author }}",
+    "datePublished": "{{ page.publication_date }}"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "{{ page.rating }}",
+    "bestRating": "5"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Nini Bennet Moll"
+  },
+  "reviewBody": "{{ page.excerpt | strip_html | truncate: 160 }}"
+}
+</script>
