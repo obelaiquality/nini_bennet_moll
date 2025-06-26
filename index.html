@@ -2,84 +2,109 @@
 layout: default
 title: Home
 ---
-<h1>Welcome to My Book Nook 🌟</h1>
-<p>A cosy little place where I share thoughts on books I love.</p>
-<blockquote id="quote-of-the-day"></blockquote>
-
-<div class="featured-carousel">
-  {% for post in site.posts %}
-    {% if post.featured %}
-    <div class="featured-item">
-      <a href="{{ site.baseurl }}{{ post.url }}">
-        {% if post.cover %}
-          <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" loading="lazy">
-        {% endif %}
-        <h3>{{ post.title }}</h3>
-      </a>
+<div class="landing">
+  <section class="author-profile">
+    <img src="{{ site.baseurl }}/assets/images/author.jpeg"
+         alt="Nini Bennett-Moll" class="author-photo">
+    <div>
+      <h2>Nini Bennett-Moll</h2>
+      <p>PhD candidate in Literature. Published many novels and poetry bundles.</p>
     </div>
-    {% endif %}
-  {% endfor %}
+  </section>
+
+  <blockquote id="quote-of-the-day"></blockquote>
 </div>
 
-<div class="summary">
-  <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
-  <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
-</div>
+<div class="page-content">
+  <aside class="sidebar">
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search reviews…">
+      <select id="author-filter">
+        <option value="">All Authors</option>
+        {% assign authors = site.posts | map: "author" | uniq | sort %}
+        {% for author in authors %}
+          <option value="{{ author }}">{{ author }}</option>
+        {% endfor %}
+      </select>
+      <select id="tag-filter">
+        <option value="">All Topics</option>
+        {% assign all_tags = "" | split: "" %}
+        {% for post in site.posts %}
+          {% assign all_tags = all_tags | concat: post.tags %}
+        {% endfor %}
+        {% assign unique_tags = all_tags | uniq | sort %}
+        {% for tag in unique_tags %}
+          <option value="{{ tag }}">{{ tag }}</option>
+        {% endfor %}
+      </select>
+      <select id="genre-filter">
+        <option value="">All Genres</option>
+        {% assign genres = site.posts | map: "genre" | uniq | sort %}
+        {% for g in genres %}
+          <option value="{{ g }}">{{ g }}</option>
+        {% endfor %}
+      </select>
+      <select id="rating-filter">
+        <option value="">All Ratings</option>
+        {% for r in "0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5" | split: "," %}
+          <option value="{{ r }}">{{ r }}+</option>
+        {% endfor %}
+      </select>
+      <select id="year-filter">
+        <option value="">All Years</option>
+        {% assign years = site.posts | map: "publication_date" | map: "date" | map: "year" | uniq | sort %}
+        {% for y in years %}
+          <option value="{{ y }}">{{ y }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </aside>
 
-<div class="filters">
-  <input type="text" id="search" placeholder="Search reviews...">
-  <select id="author-filter">
-    <option value="">All Authors</option>
-    {% assign authors = site.posts | map: "author" | uniq | sort %}
-    {% for author in authors %}
-      <option value="{{ author }}">{{ author }}</option>
-    {% endfor %}
-  </select>
-  <select id="tag-filter">
-    <option value="">All Topics</option>
-    {% assign all_tags = "" | split: "" %}
+  <main class="reviews">
+    <div class="featured-carousel">
+      {% for post in site.posts %}
+        {% if post.featured %}
+          <div class="featured-item">
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              {% if post.cover %}
+                <img src="{{ site.baseurl }}{{ post.cover }}"
+                     alt="{{ post.title }} cover" loading="lazy">
+              {% endif %}
+              <h3>{{ post.title }}</h3>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="summary">
+      <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
+      <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
+    </div>
+
     {% for post in site.posts %}
-      {% assign all_tags = all_tags | concat: post.tags %}
+      <article class="review"
+               data-author="{{ post.author }}"
+               data-tags="{{ post.tags | join: ',' }}"
+               data-genre="{{ post.genre }}"
+               data-rating="{{ post.rating }}"
+               data-year="{{ post.publication_date | date: '%Y' }}"
+               data-excerpt="{{ post.excerpt | strip_html | escape }}">
+        <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
+        <p class="meta">by {{ post.author }}
+           — {{ post.date | date: '%B %d, %Y' }}</p>
+        {% if post.cover %}
+          <img src="{{ site.baseurl }}{{ post.cover }}"
+               alt="{{ post.title }} cover"
+               class="cover" loading="lazy">
+        {% endif %}
+        {% if post.rating %}
+          <p class="rating" data-rating="{{ post.rating }}"></p>
+        {% endif %}
+        <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
+        <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
+        <a href="{{ site.baseurl }}{{ post.url }}" class="btn">Read More</a>
+      </article>
     {% endfor %}
-    {% assign unique_tags = all_tags | uniq | sort %}
-    {% for tag in unique_tags %}
-      <option value="{{ tag }}">{{ tag }}</option>
-    {% endfor %}
-  </select>
-  <select id="genre-filter">
-    <option value="">All Genres</option>
-    {% assign genres = site.posts | map: "genre" | uniq | sort %}
-    {% for g in genres %}
-      <option value="{{ g }}">{{ g }}</option>
-    {% endfor %}
-  </select>
-  <select id="rating-filter">
-    <option value="">All Ratings</option>
-    {% for r in "0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5" | split: "," %}
-      <option value="{{ r }}">{{ r }}+</option>
-    {% endfor %}
-  </select>
-  <select id="year-filter">
-    <option value="">All Years</option>
-    {% assign years = site.posts | map: "publication_date" | map: "date" | map: "year" | uniq | sort %}
-    {% for y in years %}
-      <option value="{{ y }}">{{ y }}</option>
-    {% endfor %}
-  </select>
+  </main>
 </div>
-
-{% for post in site.posts %}
-<article class="review" data-author="{{ post.author }}" data-tags="{{ post.tags | join: ',' }}" data-date="{{ post.date | date_to_xmlschema }}" data-genre="{{ post.genre }}" data-rating="{{ post.rating }}" data-year="{{ post.publication_date | date: '%Y' }}" data-excerpt="{{ post.excerpt | strip_html | escape }}"> 
-  <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
-  <p class="meta">by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}</p>
-  {% if post.cover %}
-    <img src="{{ site.baseurl }}{{ post.cover }}" alt="{{ post.title }} cover" class="cover" loading="lazy">
-  {% endif %}
-  {% if post.rating %}
-    <p class="rating" data-rating="{{ post.rating }}"></p>
-  {% endif %}
-  <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
-  <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
-  <a href="{{ site.baseurl }}{{ post.url }}" class="btn">Read More</a>
-</article>
-{% endfor %}
