@@ -1,6 +1,8 @@
 # Nini Book Reviews
 
 This is a cosy book review website built with **Jekyll** and **Netlify CMS**.
+The homepage now includes simple search and filtering options so visitors can
+quickly find reviews by author or topic.
 Deploy it to Netlify or GitHub Pages and manage content through the Netlify
 CMS interface. When hosting on GitHub Pages the CMS needs to commit directly to
 your repository, so the `admin/config.yml` file uses the GitHub backend with a
@@ -26,3 +28,9 @@ correctly on GitHub Pages.
 - `_posts/` – markdown files for each book review
 - `assets/` – CSS and images
 - `admin/` – Netlify CMS configuration
+
+## New Features
+
+- Filter posts by author or tags directly on the homepage.
+- Optional author biography section per review.
+- Netlify CMS configuration updated to support tags and author bios.
