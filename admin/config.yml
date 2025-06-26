@@ -2,7 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-local_backend: true
+# Use the remote Git backend when editing through Netlify CMS
+# Removing `local_backend: true` enables full online editing
 publish_mode: editorial_workflow
 
 media_folder: "assets/images"
