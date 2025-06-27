@@ -4,7 +4,7 @@ title: Home
 ---
 <div class="landing">
   <section class="author-profile">
-    <img src="{{ site.baseurl }}/assets/images/author.jpeg"
+    <img src="{{ "/assets/images/author.jpeg" | relative_url }}"
          alt="Nini Bennett-Moll"
          class="author-photo">
     <div>
@@ -14,7 +14,7 @@ title: Home
   </section>
 
   <blockquote id="quote-of-the-day">
-    <img src="{{ site.baseurl }}/assets/icons/quote.svg"
+    <img src="{{ "/assets/icons/quote.svg" | relative_url }}"
          alt="Quote icon"
          class="icon">
   </blockquote>
@@ -24,7 +24,7 @@ title: Home
   <aside class="sidebar">
     <div class="filters">
       <div class="search-wrapper">
-        <img src="{{ site.baseurl }}/assets/icons/search.svg"
+        <img src="{{ "/assets/icons/search.svg" | relative_url }}"
              alt="Search"
              class="icon">
         <input type="text" id="search" placeholder="Search reviews…">
@@ -80,9 +80,9 @@ title: Home
       {% for post in site.posts %}
         {% if post.featured %}
           <div class="featured-item">
-            <a href="{{ site.baseurl }}{{ post.url }}">
+            <a href="{{ post.url | relative_url }}">
               {% if post.cover %}
-                <img src="{{ site.baseurl }}{{ post.cover }}"
+                <img src="{{ post.cover | relative_url }}"
                      alt="{{ post.title }} cover"
                      loading="lazy">
               {% endif %}
@@ -108,16 +108,14 @@ title: Home
                  data-year="{{ post.publication_date | date: '%Y' }}"
                  data-excerpt="{{ post.excerpt | strip_html | escape }}">
           <h2>
-            <a href="{{ site.baseurl }}{{ post.url }}">
-              {{ post.title }}
-            </a>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
           <p class="meta">
             by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}
           </p>
 
           {% if post.cover %}
-            <img src="{{ site.baseurl }}{{ post.cover }}"
+            <img src="{{ post.cover | relative_url }}"
                  alt="{{ post.title }} cover"
                  class="cover"
                  loading="lazy">
@@ -125,7 +123,7 @@ title: Home
 
           {% if post.rating %}
             <p class="rating" data-rating="{{ post.rating }}">
-              <img src="{{ site.baseurl }}/assets/icons/star.svg"
+              <img src="{{ "/assets/icons/star.svg" | relative_url }}"
                    alt="Star"
                    class="icon">
               {{ post.rating }}
@@ -137,8 +135,8 @@ title: Home
           {% endif %}
 
           <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
-          <a href="{{ site.baseurl }}{{ post.url }}" class="btn">
-            <img src="{{ site.baseurl }}/assets/icons/arrow-right.svg"
+          <a href="{{ post.url | relative_url }}" class="btn">
+            <img src="{{ "/assets/icons/arrow-right.svg" | relative_url }}"
                  alt=""
                  class="icon">
             Read More
