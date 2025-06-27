@@ -9,12 +9,6 @@ title: Home
     {% if featured %}
       <h1 class="hero-title">{{ featured.title }}</h1>
       <p class="hero-author">by {{ featured.author }}</p>
-      {% if featured.cover %}
-        <img
-          src="{{ featured.cover | relative_url }}"
-          alt="{{ featured.title }} cover"
-          class="hero-cover">
-      {% endif %}
     {% else %}
       <h1 class="hero-title">{{ site.title }}</h1>
       <p class="hero-author">Your home for book reviews</p>
@@ -29,15 +23,13 @@ title: Home
       <input type="text" id="search" placeholder="Search reviews…">
       <select id="author-filter">
         <option value="">All Authors</option>
-        {% assign authors = site.posts | map: "author" | uniq | sort %}
-        {% for author in authors %}
+        {% for author in site.posts | map: "author" | uniq | sort %}
           <option value="{{ author }}">{{ author }}</option>
         {% endfor %}
       </select>
       <select id="genre-filter">
         <option value="">All Genres</option>
-        {% assign genres = site.posts | map: "genre" | uniq | sort %}
-        {% for g in genres %}
+        {% for g in site.posts | map: "genre" | uniq | sort %}
           <option value="{{ g }}">{{ g }}</option>
         {% endfor %}
       </select>
@@ -49,13 +41,12 @@ title: Home
       </select>
       <select id="year-filter">
         <option value="">All Years</option>
-        {% assign years = site.posts 
-          | map: "publication_date" 
-          | map: "date" 
-          | map: "year" 
-          | uniq 
-          | sort %}
-        {% for y in years %}
+        {% for y in site.posts
+            | map: "publication_date"
+            | map: "date"
+            | map: "year"
+            | uniq
+            | sort %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
@@ -69,10 +60,9 @@ title: Home
           <div class="featured-item">
             <a href="{{ post.url | relative_url }}">
               {% if post.cover %}
-                <img
-                  src="{{ post.cover | relative_url }}"
-                  alt="{{ post.title }} cover"
-                  loading="lazy">
+                <img src="{{ post.cover | relative_url }}"
+                     alt="{{ post.title }} cover"
+                     loading="lazy">
               {% endif %}
               <h3>{{ post.title }}</h3>
             </a>
@@ -95,17 +85,16 @@ title: Home
                  data-rating="{{ post.rating }}"
                  data-year="{{ post.publication_date | date: '%Y' }}"
                  data-excerpt="{{ post.excerpt | strip_html | escape }}">
+          {% if post.cover %}
+            <img src="{{ post.cover | relative_url }}"
+                 alt="{{ post.title }} cover"
+                 class="cover-thumb"
+                 loading="lazy">
+          {% endif %}
           <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
           <p class="meta">
             by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}
           </p>
-          {% if post.cover %}
-            <img
-              src="{{ post.cover | relative_url }}"
-              alt="{{ post.title }} cover"
-              class="cover"
-              loading="lazy">
-          {% endif %}
           {% if post.rating %}
             <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
