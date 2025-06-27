@@ -5,16 +5,20 @@
   <title>Content Manager</title>
   <!-- Netlify Identity widget first -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Then Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
 </head>
 <body>
+  <!-- This is where Netlify CMS will render -->
   <div id="ncms-app"></div>
+
+  <!-- Now load Netlify CMS itself, after the mount div -->
+  <script src="https://unpkg.com/netlify-cms-app@^2.15.72/dist/netlify-cms.js"></script>
   <script>
-    // open the login modal if not already authenticated
+    // Kick off Identity + Git Gateway login if needed
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
-        if (!user) window.netlifyIdentity.open();
+        if (!user) {
+          window.netlifyIdentity.open();
+        }
       });
     }
   </script>
