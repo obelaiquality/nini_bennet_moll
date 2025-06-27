@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>Content Manager</title>
-  <!-- Netlify Identity before CMS -->
+  <!-- Netlify Identity widget first -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Then Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
 </head>
 <body>
   <div id="ncms-app"></div>
   <script>
-    // automatically open the signup/login modal
+    // open the login modal if not already authenticated
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) window.netlifyIdentity.open();
