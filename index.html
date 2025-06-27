@@ -3,9 +3,9 @@ layout: default
 title: Home
 ---
 {% assign featured = site.posts | where: "featured", true | first %}
-<section 
-  class="hero-section"{% if featured.cover %}
-  style="background-image: url('{{ featured.cover | relative_url }}')"{% endif %}>
+<section class="hero-section"{% if featured.cover %}
+  style="background-image: url('{{ featured.cover | relative_url }}')"
+{% endif %}>
   <div class="hero-overlay">
     {% if featured %}
       <div class="hero-content">
