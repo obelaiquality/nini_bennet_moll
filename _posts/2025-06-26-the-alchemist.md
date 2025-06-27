@@ -2,6 +2,7 @@
 title: "The Alchemist"
 author: "Paulo Coelho"
 date: 2025-06-26
+published: true
 cover: "/assets/images/alchemist.jpg"
 genre: "Fiction"
 publication_date: "1988-04-15"
