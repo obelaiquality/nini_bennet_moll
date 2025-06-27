@@ -2,6 +2,7 @@
 title: "The Hobbit"
 author: "J.R.R. Tolkien"
 date: 2025-07-01
+published: true
 cover: "/assets/images/hobbit.jpg"
 genre: "Fantasy"
 publication_date: "1937-09-21"
