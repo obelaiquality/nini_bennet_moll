@@ -7,7 +7,7 @@
   <!-- Main stylesheet -->
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 
-  <!-- Data + Main JS -->
+  <!-- Quotes data + main JS -->
   <script>var quotes = {{ site.data.quotes | jsonify }};</script>
   <script defer src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </head>
@@ -29,13 +29,6 @@
              class="icon">
         Home
       </a>
-      |
-      <a href="{{ "/admin/" | relative_url }}">
-        <img src="{{ "/assets/icons/filter.svg" | relative_url }}"
-             alt="Admin"
-             class="icon">
-        Admin
-      </a>
       <button id="dark-toggle" title="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -44,7 +37,7 @@
     {{ content }}
   </div>
 
-  <!-- Load & init Netlify Identity on every page -->
+  <!-- Netlify Identity (only needed for /admin/) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
