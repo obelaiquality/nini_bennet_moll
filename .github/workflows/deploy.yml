@@ -1,26 +1,19 @@
 name: Build & Deploy to Netlify
-
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.x"
-
-      - name: Install Bundler & Gems
-        run: |
-          gem install bundler
-          bundle install
+          ruby-version: "3.2.8"
+          bundler-cache: true
 
       - name: Build site with Jekyll
         run: bundle exec jekyll build
