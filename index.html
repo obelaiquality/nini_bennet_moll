@@ -2,51 +2,28 @@
 layout: default
 title: Home
 ---
-<div class="landing">
-  <section class="author-profile">
-    <img src="{{ "/assets/images/author.jpeg" | relative_url }}"
-         alt="Nini Bennett-Moll"
-         class="author-photo">
-    <div>
-      <h2>Nini Bennett-Moll</h2>
-      <p>Published poet and author.</p>
+<section class="hero-section" style="background-image:url('{{ site.posts | first.cover | relative_url }}')">
+  <div class="hero-overlay">
+    {% assign featured = site.posts | where: "featured", true | first %}
+    <div class="hero-content">
+      <h1 class="hero-title">{{ featured.title }}</h1>
+      <p class="hero-author">by {{ featured.author }}</p>
+      <a href="{{ featured.url | relative_url }}" class="btn btn-primary">Read Featured Review</a>
     </div>
-  </section>
-
-  <blockquote id="quote-of-the-day">
-    <img src="{{ "/assets/icons/quote.svg" | relative_url }}"
-         alt="Quote icon"
-         class="icon">
-  </blockquote>
-</div>
+  </div>
+</section>
 
 <div class="page-content">
   <aside class="sidebar">
     <div class="filters">
-      <div class="search-wrapper">
-        <img src="{{ "/assets/icons/search.svg" | relative_url }}"
-             alt="Search"
-             class="icon">
-        <input type="text" id="search" placeholder="Search reviews…">
-      </div>
+      <h2>Filters</h2>
+      <input type="text" id="search" placeholder="Search reviews…">
 
       <select id="author-filter">
         <option value="">All Authors</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
         {% for author in authors %}
           <option value="{{ author }}">{{ author }}</option>
-        {% endfor %}
-      </select>
-
-      <select id="tag-filter">
-        <option value="">All Topics</option>
-        {% assign all_tags = "" | split: "" %}
-        {% for post in site.posts %}
-          {% assign all_tags = all_tags | concat: post.tags %}
-        {% endfor %}
-        {% assign unique_tags = all_tags | uniq | sort %}
-        {% for tag in unique_tags %}
-          <option value="{{ tag }}">{{ tag }}</option>
         {% endfor %}
       </select>
 
@@ -75,74 +52,27 @@ title: Home
     </div>
   </aside>
 
-  <main class="reviews">
-    <div class="featured-carousel">
-      {% for post in site.posts %}
-        {% if post.featured %}
-          <div class="featured-item">
-            <a href="{{ post.url | relative_url }}">
-              {% if post.cover %}
-                <img src="{{ post.cover | relative_url }}"
-                     alt="{{ post.title }} cover"
-                     loading="lazy">
-              {% endif %}
-              <h3>{{ post.title }}</h3>
-            </a>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <div class="summary">
-      <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
-      <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
-    </div>
-
+  <section class="reviews-grid">
     {% for post in site.posts %}
       {% unless post.featured %}
-        <article class="review"
+        <article class="review-card"
                  data-author="{{ post.author }}"
-                 data-tags="{{ post.tags | join:',' }}"
                  data-genre="{{ post.genre }}"
                  data-rating="{{ post.rating }}"
                  data-year="{{ post.publication_date | date: '%Y' }}"
                  data-excerpt="{{ post.excerpt | strip_html | escape }}">
-          <h2>
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </h2>
-          <p class="meta">
-            by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}
-          </p>
-
-          {% if post.cover %}
-            <img src="{{ post.cover | relative_url }}"
-                 alt="{{ post.title }} cover"
-                 class="cover"
-                 loading="lazy">
-          {% endif %}
-
-          {% if post.rating %}
-            <p class="rating" data-rating="{{ post.rating }}">
-              <img src="{{ "/assets/icons/star.svg" | relative_url }}"
-                   alt="Star"
-                   class="icon">
-              {{ post.rating }}
-            </p>
-          {% endif %}
-
-          {% if post.tags %}
-            <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
-          {% endif %}
-
-          <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
-          <a href="{{ post.url | relative_url }}" class="btn">
-            <img src="{{ "/assets/icons/arrow-right.svg" | relative_url }}"
-                 alt=""
-                 class="icon">
-            Read More
-          </a>
+          <img src="{{ post.cover | relative_url }}" alt="{{ post.title }} cover" class="card-cover" loading="lazy">
+          <div class="card-body">
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-meta">by {{ post.author }}</p>
+            <p class="card-excerpt">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+            <div class="card-footer">
+              <span class="stars" data-rating="{{ post.rating }}"></span>
+              <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Read More</a>
+            </div>
+          </div>
         </article>
       {% endunless %}
     {% endfor %}
-  </main>
+  </section>
 </div>
