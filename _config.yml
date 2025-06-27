@@ -1,9 +1,14 @@
+# _config.yml
 title: My Book Nook
-baseurl: "/nini_bennet_moll"
-url: "https://obelaiquality.github.io"
+# no baseurl
+baseurl: ""
+url: "https://boekresensies.netlify.app"
+
 collections:
   posts:
     output: true
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
