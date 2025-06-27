@@ -3,37 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  <!-- Quotes data + main JS -->
   <script>var quotes = {{ site.data.quotes | jsonify }};</script>
-  <script defer src="{{ site.baseurl }}/assets/js/main.js"></script>
+  <script defer src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </head>
 <body>
   <header class="site-header">
     <h1>
-      <a href="{{ site.baseurl }}/">
-        <img src="{{ site.baseurl }}/assets/icons/home.svg"
+      <a href="{{ "/" | relative_url }}">
+        <img src="{{ "/assets/icons/home.svg" | relative_url }}"
              alt="Home"
              class="icon">
         {{ site.title }}
       </a>
     </h1>
     <nav>
-      <a href="{{ site.baseurl }}/">
-        <img src="{{ site.baseurl }}/assets/icons/home.svg"
+      <a href="{{ "/" | relative_url }}">
+        <img src="{{ "/assets/icons/home.svg" | relative_url }}"
              alt="Home"
              class="icon">
         Home
       </a>
       |
-      <a href="{{ site.baseurl }}/admin/">
-        <img src="{{ site.baseurl }}/assets/icons/filter.svg"
+      <a href="{{ "/admin/" | relative_url }}">
+        <img src="{{ "/assets/icons/filter.svg" | relative_url }}"
              alt="Admin"
              class="icon">
         Admin
       </a>
-      <button id="dark-toggle" title="Toggle dark mode">
-        🌙
-      </button>
+      <button id="dark-toggle" title="Toggle dark mode">🌙</button>
     </nav>
   </header>
 
