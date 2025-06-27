@@ -2,6 +2,7 @@
 title: "The Great Gatsby"
 author: "F. Scott Fitzgerald"
 date: 2025-06-30
+published: true
 cover: "/assets/images/gatsby.jpg"
 genre: "Fiction"
 publication_date: "1925-04-10"
