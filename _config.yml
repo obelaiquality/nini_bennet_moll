@@ -1,8 +1,12 @@
 # _config.yml
+
 title: My Book Nook
-# no baseurl
-baseurl: ""
+baseurl: ""                        # no sub-path, Netlify lives at root
 url: "https://boekresensies.netlify.app"
+
+# ensure Jekyll copies admin/ verbatim
+include:
+  - admin
 
 collections:
   posts:
