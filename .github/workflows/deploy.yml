@@ -1,15 +1,22 @@
-# .github/workflows/deploy.yml
 name: Build & Deploy to Netlify
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Vendor Netlify CMS bundle
+        run: |
+          mkdir -p assets/vendor
+          curl -sSL https://unpkg.com/netlify-cms@^2.17.0/dist/netlify-cms.js \
+            -o assets/vendor/netlify-cms.js
 
       - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
