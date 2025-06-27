@@ -3,10 +3,19 @@
 <head>
   <meta charset="utf-8">
   <title>Content Manager</title>
+  <!-- Netlify Identity before CMS -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
 </head>
 <body>
-  <!-- Required mount point for Netlify CMS -->
   <div id="ncms-app"></div>
+  <script>
+    // automatically open the signup/login modal
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) window.netlifyIdentity.open();
+      });
+    }
+  </script>
 </body>
 </html>
