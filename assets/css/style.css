@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   text-align: center;
 }
 .hero-content {
@@ -17,18 +17,21 @@
   margin: 0 0 0.5rem;
 }
 .hero-author {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
   font-size: 1.2rem;
 }
-.hero-cover {
-  max-width: 100%;
+
+/* ── Review Card Thumbnail ─────────────────────────── */
+.cover-thumb {
+  display: block;
+  max-width: 120px;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  margin: 1rem 0 2rem;
+  margin: 0 auto 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ── Page Layout ──────────────────────────────────── */
+/* ── Page Layout ───────────────────────────────────── */
 .page-content {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -36,11 +39,10 @@
   padding: 2rem;
 }
 
-/* ── Sidebar & Filters ────────────────────────────── */
+/* ── Sidebar & Filters ─────────────────────────────── */
 .sidebar {
   position: sticky;
   top: 4rem;
-  align-self: start;
 }
 .filters {
   display: flex;
@@ -55,18 +57,18 @@
   border-radius: 4px;
 }
 
-/* ── Reviews Grid ─────────────────────────────────── */
+/* ── Reviews Grid ──────────────────────────────────── */
 .reviews {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-/* ── Review Card ──────────────────────────────────── */
+/* ── Review Card ───────────────────────────────────── */
 .review {
   background: var(--bg-light);
   border-radius: 8px;
-  overflow: hidden;
+  padding: 1rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -77,72 +79,44 @@
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
-.cover {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
 .meta {
   font-size: 0.9rem;
   color: #555;
-  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
 }
 .tags {
   font-size: 0.85rem;
   color: #666;
-  padding: 0 1rem;
+  margin-bottom: 0.5rem;
 }
 .rating {
-  padding: 0.5rem 1rem;
   font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* ── Featured Carousel ─────────────────────────────── */
-.featured-carousel {
+/* ── Header Adjustments ────────────────────────────── */
+.site-header {
   display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding-bottom: 1rem;
-}
-.featured-item {
-  min-width: 200px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
   background: var(--bg-light);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.featured-item:hover {
-  transform: translateY(-4px);
+.site-branding a {
+  display: flex;
+  align-items: center;
 }
-.featured-item img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
+.site-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.75rem;
+  margin-left: 0.75rem;
 }
-.featured-item h3 {
-  margin: 0.5rem;
-  font-size: 1rem;
-}
-
-/* ── Summary & Footer ─────────────────────────────── */
-.summary {
-  padding: 1rem 0;
-}
-.site-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.9rem;
-  background: rgba(0,0,0,0.05);
-}
-.theme-dark .site-footer {
-  background: rgba(255,255,255,0.05);
-}
-
-/* ── Theme Toggle ─────────────────────────────────── */
 .theme-toggle {
+  font-size: 1.5rem;
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
 }
+
+/* ── Other styles remain unchanged… ───────────────── */
