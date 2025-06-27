@@ -1,16 +1,12 @@
+# admin/config.yml
 backend:
-  # Use the GitHub backend so the CMS can commit directly to your repository
-  # Replace "yourusername" and "yourrepo" with your actual GitHub details
-  name: github
-  repo: obelaiquality/nini_bennet_moll
+  name: git-gateway
   branch: main
 
-# Use the remote Git backend when editing through Netlify CMS
-# Removing `local_backend: true` enables full online editing
 publish_mode: editorial_workflow
 
 media_folder: "assets/images"
-public_folder: "/nini_bennet_moll/assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: "posts"
@@ -18,15 +14,15 @@ collections:
     folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-      fields:
-        - { label: "Title", name: "title", widget: "string" }
-        - { label: "Author", name: "author", widget: "string" }
-        - { label: "Genre", name: "genre", widget: "select", options: ["Fiction", "Non-Fiction", "Sci-Fi", "Romance", "Biography"] }
-        - { label: "Publication Date", name: "publication_date", widget: "datetime" }
-        - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-        - { label: "Cover", name: "cover", widget: "image" }
-        - { label: "Date", name: "date", widget: "datetime" }
-        - { label: "Featured", name: "featured", widget: "boolean", default: false }
-        - { label: "Author Bio", name: "author_bio", widget: "text", required: false }
-        - { label: "Tags", name: "tags", widget: "list", default: [] }
-        - { label: "Body", name: "body", widget: "markdown" }
+    fields:
+      - { label: "Title",           name: "title",            widget: "string" }
+      - { label: "Author",          name: "author",           widget: "string" }
+      - { label: "Genre",           name: "genre",            widget: "select", options: ["Fiction","Non-Fiction","Sci-Fi","Romance","Biography"] }
+      - { label: "Publication Date",name: "publication_date", widget: "datetime" }
+      - { label: "Rating",          name: "rating",           widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - { label: "Cover",           name: "cover",            widget: "image" }
+      - { label: "Date",            name: "date",             widget: "datetime" }
+      - { label: "Featured",        name: "featured",         widget: "boolean", default: false }
+      - { label: "Author Bio",      name: "author_bio",       widget: "text",     required: false }
+      - { label: "Tags",            name: "tags",             widget: "list",     default: [] }
+      - { label: "Body",            name: "body",             widget: "markdown" }
