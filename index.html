@@ -3,23 +3,21 @@ layout: default
 title: Home
 ---
 {% assign featured = site.posts | where: "featured", true | first %}
-<section class="hero-section"{% if featured.cover %}
-  style="background-image: url('{{ featured.cover | relative_url }}')"
-{% endif %}>
-  <div class="hero-overlay">
+
+<section class="hero-section">
+  <div class="hero-content">
     {% if featured %}
-      <div class="hero-content">
-        <h1 class="hero-title">{{ featured.title }}</h1>
-        <p class="hero-author">by {{ featured.author }}</p>
-        <a href="{{ featured.url | relative_url }}" class="btn btn-primary">
-          Read Featured Review
-        </a>
-      </div>
+      <h1 class="hero-title">{{ featured.title }}</h1>
+      <p class="hero-author">by {{ featured.author }}</p>
+      {% if featured.cover %}
+        <img
+          src="{{ featured.cover | relative_url }}"
+          alt="{{ featured.title }} cover"
+          class="hero-cover">
+      {% endif %}
     {% else %}
-      <div class="hero-content">
-        <h1 class="hero-title">{{ site.title }}</h1>
-        <p class="hero-author">Your home for book reviews</p>
-      </div>
+      <h1 class="hero-title">{{ site.title }}</h1>
+      <p class="hero-author">Your home for book reviews</p>
     {% endif %}
   </div>
 </section>
@@ -29,7 +27,6 @@ title: Home
     <div class="filters">
       <h2>Filters</h2>
       <input type="text" id="search" placeholder="Search reviews…">
-
       <select id="author-filter">
         <option value="">All Authors</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
@@ -37,7 +34,6 @@ title: Home
           <option value="{{ author }}">{{ author }}</option>
         {% endfor %}
       </select>
-
       <select id="genre-filter">
         <option value="">All Genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
@@ -45,14 +41,12 @@ title: Home
           <option value="{{ g }}">{{ g }}</option>
         {% endfor %}
       </select>
-
       <select id="rating-filter">
         <option value="">All Ratings</option>
         {% for r in "0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5" | split: "," %}
           <option value="{{ r }}">{{ r }}+</option>
         {% endfor %}
       </select>
-
       <select id="year-filter">
         <option value="">All Years</option>
         {% assign years = site.posts 
@@ -75,9 +69,10 @@ title: Home
           <div class="featured-item">
             <a href="{{ post.url | relative_url }}">
               {% if post.cover %}
-                <img src="{{ post.cover | relative_url }}"
-                     alt="{{ post.title }} cover"
-                     loading="lazy">
+                <img
+                  src="{{ post.cover | relative_url }}"
+                  alt="{{ post.title }} cover"
+                  loading="lazy">
               {% endif %}
               <h3>{{ post.title }}</h3>
             </a>
@@ -100,30 +95,23 @@ title: Home
                  data-rating="{{ post.rating }}"
                  data-year="{{ post.publication_date | date: '%Y' }}"
                  data-excerpt="{{ post.excerpt | strip_html | escape }}">
-          <h2>
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </h2>
+          <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
           <p class="meta">
             by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}
           </p>
-
           {% if post.cover %}
-            <img src="{{ post.cover | relative_url }}"
-                 alt="{{ post.title }} cover"
-                 class="cover"
-                 loading="lazy">
+            <img
+              src="{{ post.cover | relative_url }}"
+              alt="{{ post.title }} cover"
+              class="cover"
+              loading="lazy">
           {% endif %}
-
           {% if post.rating %}
-            <p class="rating" data-rating="{{ post.rating }}">
-              ★ {{ post.rating }}
-            </p>
+            <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
-
           {% if post.tags %}
             <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
           {% endif %}
-
           <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
           <a href="{{ post.url | relative_url }}" class="btn btn-primary">
             Read More
