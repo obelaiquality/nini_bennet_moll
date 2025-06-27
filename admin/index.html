@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <title>Content Manager</title>
 
-  <!-- 1) Netlify Identity first -->
+  <!-- 1) Netlify Identity widget for Git-Gateway auth -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <!-- 2) This is where the CMS UI will go -->
+  <!-- 2) CMS injects into this div -->
   <div id="ncms-app"></div>
 
-  <!-- 3) Load the official Netlify CMS UMD bundle AFTER the mount point -->
-  <script src="https://unpkg.com/netlify-cms@^2.15.72/dist/netlify-cms.js"></script>
+  <!-- 3) Official Netlify CMS UMD bundle (auto-mounts) -->
+  <script src="https://unpkg.com/netlify-cms@^2.17.0/dist/netlify-cms.js"></script>
 
-  <!-- 4) Trigger the Identity login flow if needed -->
+  <!-- 4) Trigger the login/signup modal if not already authenticated -->
   <script>
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
