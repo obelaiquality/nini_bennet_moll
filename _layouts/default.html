@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?
+    family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Open+Sans:wght@300;400;600&family=Playfair+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+
   <!-- Main stylesheet -->
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 
@@ -11,27 +16,26 @@
   <script>var quotes = {{ site.data.quotes | jsonify }};</script>
   <script defer src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </head>
-
-<body>
+<body class="theme-light">
   <header class="site-header">
-    <h1>
+    <div class="site-branding">
       <a href="{{ "/" | relative_url }}">
-        <img src="{{ "/assets/icons/home.svg" | relative_url }}"
-             alt="Home"
-             class="icon">
-        {{ site.title }}
+        <img src="{{ "/assets/icons/home.svg" | relative_url }}" alt="Home" class="icon">
+        <span class="site-title">{{ site.title }}</span>
       </a>
-    </h1>
-    <nav>
-      <button id="dark-toggle" title="Toggle dark mode">🌙</button>
-    </nav>
+    </div>
+    <button id="dark-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
   </header>
 
-  <div class="container">
+  <main class="site-main">
     {{ content }}
-  </div>
+  </main>
 
-  <!-- Netlify Identity (for /admin/ only) -->
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+  </footer>
+
+  <!-- Netlify Identity (for CMS /admin/) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
