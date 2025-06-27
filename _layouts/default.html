@@ -23,12 +23,6 @@
       </a>
     </h1>
     <nav>
-      <a href="{{ "/" | relative_url }}">
-        <img src="{{ "/assets/icons/home.svg" | relative_url }}"
-             alt="Home"
-             class="icon">
-        Home
-      </a>
       <button id="dark-toggle" title="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -37,7 +31,7 @@
     {{ content }}
   </div>
 
-  <!-- Netlify Identity (only needed for /admin/) -->
+  <!-- Netlify Identity (for /admin/ only) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
