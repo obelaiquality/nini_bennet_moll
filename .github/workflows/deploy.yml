@@ -1,4 +1,6 @@
+# .github/workflows/deploy.yml
 name: Build & Deploy to Netlify
+
 on:
   push:
     branches: [ main ]
@@ -9,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Ruby
+      - name: Set up Ruby & install gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.8"
