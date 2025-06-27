@@ -2,14 +2,25 @@
 layout: default
 title: Home
 ---
-<section class="hero-section" style="background-image:url('{{ site.posts | first.cover | relative_url }}')">
+{% assign featured = site.posts | where: "featured", true | first %}
+<section 
+  class="hero-section"{% if featured.cover %}
+  style="background-image: url('{{ featured.cover | relative_url }}')"{% endif %}>
   <div class="hero-overlay">
-    {% assign featured = site.posts | where: "featured", true | first %}
-    <div class="hero-content">
-      <h1 class="hero-title">{{ featured.title }}</h1>
-      <p class="hero-author">by {{ featured.author }}</p>
-      <a href="{{ featured.url | relative_url }}" class="btn btn-primary">Read Featured Review</a>
-    </div>
+    {% if featured %}
+      <div class="hero-content">
+        <h1 class="hero-title">{{ featured.title }}</h1>
+        <p class="hero-author">by {{ featured.author }}</p>
+        <a href="{{ featured.url | relative_url }}" class="btn btn-primary">
+          Read Featured Review
+        </a>
+      </div>
+    {% else %}
+      <div class="hero-content">
+        <h1 class="hero-title">{{ site.title }}</h1>
+        <p class="hero-author">Your home for book reviews</p>
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -44,7 +55,12 @@ title: Home
 
       <select id="year-filter">
         <option value="">All Years</option>
-        {% assign years = site.posts | map: "publication_date" | map: "date" | map: "year" | uniq | sort %}
+        {% assign years = site.posts 
+          | map: "publication_date" 
+          | map: "date" 
+          | map: "year" 
+          | uniq 
+          | sort %}
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
@@ -52,27 +68,68 @@ title: Home
     </div>
   </aside>
 
-  <section class="reviews-grid">
+  <main class="reviews">
+    <div class="featured-carousel">
+      {% for post in site.posts %}
+        {% if post.featured %}
+          <div class="featured-item">
+            <a href="{{ post.url | relative_url }}">
+              {% if post.cover %}
+                <img src="{{ post.cover | relative_url }}"
+                     alt="{{ post.title }} cover"
+                     loading="lazy">
+              {% endif %}
+              <h3>{{ post.title }}</h3>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="summary">
+      <p><strong>Top Authors:</strong> <span id="top-authors"></span></p>
+      <p><strong>Popular Genres:</strong> <span id="top-genres"></span></p>
+    </div>
+
     {% for post in site.posts %}
       {% unless post.featured %}
-        <article class="review-card"
+        <article class="review"
                  data-author="{{ post.author }}"
+                 data-tags="{{ post.tags | join:',' }}"
                  data-genre="{{ post.genre }}"
                  data-rating="{{ post.rating }}"
                  data-year="{{ post.publication_date | date: '%Y' }}"
                  data-excerpt="{{ post.excerpt | strip_html | escape }}">
-          <img src="{{ post.cover | relative_url }}" alt="{{ post.title }} cover" class="card-cover" loading="lazy">
-          <div class="card-body">
-            <h3 class="card-title">{{ post.title }}</h3>
-            <p class="card-meta">by {{ post.author }}</p>
-            <p class="card-excerpt">{{ post.excerpt | strip_html | truncate: 100 }}</p>
-            <div class="card-footer">
-              <span class="stars" data-rating="{{ post.rating }}"></span>
-              <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Read More</a>
-            </div>
-          </div>
+          <h2>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          <p class="meta">
+            by {{ post.author }} — {{ post.date | date: '%B %d, %Y' }}
+          </p>
+
+          {% if post.cover %}
+            <img src="{{ post.cover | relative_url }}"
+                 alt="{{ post.title }} cover"
+                 class="cover"
+                 loading="lazy">
+          {% endif %}
+
+          {% if post.rating %}
+            <p class="rating" data-rating="{{ post.rating }}">
+              ★ {{ post.rating }}
+            </p>
+          {% endif %}
+
+          {% if post.tags %}
+            <p class="tags">{{ post.tags | array_to_sentence_string }}</p>
+          {% endif %}
+
+          <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
+          <a href="{{ post.url | relative_url }}" class="btn btn-primary">
+            Read More
+          </a>
         </article>
       {% endunless %}
     {% endfor %}
-  </section>
+  </main>
 </div>
