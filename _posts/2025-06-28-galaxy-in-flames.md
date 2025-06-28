@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Galaxy in Flames
 author: Ben Counter
 genre: Fantasiefiksie
