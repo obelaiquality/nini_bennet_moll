@@ -1,334 +1,238 @@
-/* ----------------------------------------
-   Base & Typography
----------------------------------------- */
-body {
-  margin: 0 auto;
-  max-width: 900px;
-  padding: 2rem;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.6;
-  background: #f4f1ea;
-  color: #333;
+/* ── CSS Variables ───────────────────────────────────────── */
+:root {
+  --brand-primary: #3B8EA5;   /* new teal */
+  --brand-accent:  #2C3E50;   /* deep slate for links/buttons */
+  --bg-light:      #FDFDFD;
+  --bg-dark:       #1F1F1F;
+  --text-light:    #FFF;
+  --text-dark:     #333;
+  --highlight:     #A3B18A;   /* soft olive highlight */
+  --gold:          #F2C057;
 }
-h1, h2, h3 {
-  font-family: Georgia, serif;
-  margin-top: 0;
+
+/* Dark-mode overrides */
+.theme-dark {
+  --bg-light:   #1e1e1e;
+  --bg-dark:    #121212;
+  --text-dark:  #EEE;
+  --text-light: #FFF;
+  --brand-accent: #88B0AC;   /* lighter accent on dark */
+}
+
+/* Dark-mode text overrides */
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark p,
+.theme-dark .section-heading,
+.theme-dark .featured-meta,
+.theme-dark .featured-title,
+.theme-dark .meta,
+.theme-dark .rating {
+  color: var(--text-light) !important;
+}
+.theme-dark a {
+  color: var(--text-light) !important;
+}
+
+/* ── Global ──────────────────────────────────────────── */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  transition: background 0.3s, color 0.3s;
+}
+.theme-dark body {
+  background: var(--bg-light);
+  color: var(--text-light);
 }
 a {
-  color: #6b4c3b;
+  color: var(--brand-accent);
   text-decoration: none;
-  font-weight: bold;
 }
 a:hover {
   text-decoration: underline;
 }
 
-/* ----------------------------------------
-   Header & Nav
----------------------------------------- */
+/* ── Header ──────────────────────────────────────────── */
 .site-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--bg-light);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.site-header h1 {
-  font-size: 2rem;
-  margin: 0;
+.theme-dark .site-header {
+  background: var(--bg-dark);
 }
-.site-header nav a,
-.site-header nav button {
-  margin-left: 1rem;
-  font-size: 0.9rem;
+.site-branding {
+  display: flex;
+  align-items: center;
+}
+.site-logo {
+  font-size: 1.5rem;
+}
+.site-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.75rem;
+  margin-left: 0.75rem;
+}
+.theme-toggle {
+  font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-/* Dark‐mode header background */
-.dark .site-header {
-  background: #2c2c2c;
-}
-
-/* ----------------------------------------
-   Buttons
----------------------------------------- */
-.btn {
-  background-color: #d4a373;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.btn:hover {
-  background-color: #bc8a5f;
-}
-.btn-secondary {
-  background-color: #6b4c3b;
-}
-.btn-secondary:hover {
-  background-color: #59422f;
-}
-
-/* ----------------------------------------
-   Dark Mode
----------------------------------------- */
-.dark body {
-  background: #1e1e1e;
-  color: #eee;
-}
-.dark .review,
-.dark .review-page,
-.dark .featured-card,
-.dark .review-card {
-  background-color: #2c2c2c;
-  border-color: #444;
-}
-.dark a {
-  color: #d4a373;
-}
-
-/* ----------------------------------------
-   Hero Section
----------------------------------------- */
+/* ── Hero Intro Section ───────────────────────────────── */
 .hero-section {
-  background: #d9825f; /* terracotta accent */
+  background-color: var(--brand-primary);
   padding: 3rem 1rem;
-  border-radius: 8px;
   text-align: center;
-  margin-bottom: 2rem;
+}
+.hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--text-light);
 }
 .hero-title {
-  margin: 0;
+  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  color: #fff;
+  margin-bottom: 0.5rem;
 }
 .hero-subtitle {
-  margin-top: 0.5rem;
-  color: #f8eae0;
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
-/* ----------------------------------------
-   Featured Section
----------------------------------------- */
+/* ── Featured Reviews ────────────────────────────────── */
 .featured-section {
+  background: var(--bg-light);
+  padding: 2rem 1rem;
   margin-bottom: 2rem;
 }
+.theme-dark .featured-section {
+  background: var(--bg-dark);
+}
 .section-heading {
-  font-size: 1.8rem;
+  font-family: 'Merriweather', serif;
+  font-size: 1.75rem;
   margin-bottom: 1rem;
   text-align: center;
 }
 .featured-grid {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
+  overflow-x: auto;
 }
 .featured-card {
-  background: #fff;
+  background: var(--bg-light);
+  flex: 0 0 160px;
   border-radius: 8px;
-  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 0.75rem;
   text-align: center;
-  width: 180px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s;
+}
+.theme-dark .featured-card {
+  background: var(--bg-dark);
 }
 .featured-card:hover {
   transform: translateY(-4px);
 }
 .featured-thumb {
   width: 100%;
-  height: auto;
+  height: 220px;
+  object-fit: cover;
   border-radius: 4px;
-  margin-bottom: 0.5rem;
 }
 .featured-title {
-  margin: 0.5rem 0;
   font-size: 1rem;
-  color: #333;
+  margin: 0.75rem 0 0.25rem;
 }
 .featured-meta {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #555;
 }
 
-/* ----------------------------------------
-   Page Layout: 2-column Flex
----------------------------------------- */
+/* ── Page Layout ───────────────────────────────────── */
 .page-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 240px 1fr;
   gap: 2rem;
-  margin-top: 2rem;
+  padding: 0 1rem 2rem;
 }
 
-/* ----------------------------------------
-   Sidebar Filters
----------------------------------------- */
-.sidebar {
-  flex: 0 0 220px;
-}
-.filters h2 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+/* ── Sidebar Filters ───────────────────────────────── */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .filters input,
 .filters select {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  font-size: 0.95rem;
+  padding: 0.6rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-/* ----------------------------------------
-   Sort Controls
----------------------------------------- */
-.sort-controls {
-  width: 100%;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-.sort-controls label {
-  margin-right: 0.5rem;
-}
-
-/* ----------------------------------------
-   Reviews List (Cards)
----------------------------------------- */
+/* ── Reviews Grid ──────────────────────────────────── */
 .reviews {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
+
+/* ── Single Review Card ─────────────────────────────── */
 .review-card {
-  background: #fff;
+  background: var(--bg-light);
   border-radius: 8px;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-  flex: 1 1 calc(50% - 1.5rem);
-  max-width: calc(50% - 1.5rem);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+.theme-dark .review-card {
+  background: var(--bg-dark);
 }
 .review-card:hover {
   transform: translateY(-4px);
 }
-@media (max-width: 600px) {
-  .review-card {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-}
 .cover-thumb {
-  width: 100px;
+  width: 80px;
+  height: auto;
   float: left;
-  margin-right: 1rem;
+  margin: 0 1rem 1rem 0;
   border-radius: 4px;
 }
 .review-card h2 {
   margin-top: 0;
-  font-size: 1.2rem;
 }
-.review-card .meta {
+.meta,
+.rating {
   font-size: 0.85rem;
-  color: #555;
+  color: #666;
   margin: 0.5rem 0;
 }
-.review-card .rating {
-  color: #d4a373;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-.review-card p {
-  clear: both;
-  line-height: 1.4;
-}
-
-/* ----------------------------------------
-   Single Review Page
----------------------------------------- */
-.review-page {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
-}
-.review-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.review-title {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-.review-meta {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-.review-cover {
-  max-width: 300px;
-  width: 100%;
-  border-radius: 6px;
-  margin: 1rem auto;
-  display: block;
-}
-.review-rating {
-  font-size: 1.2rem;
-  color: #d4a373;
-  margin-bottom: 1rem;
-}
-.review-author-bio {
-  font-style: italic;
-  color: #444;
-  margin-bottom: 2rem;
-}
-.review-body {
-  line-height: 1.7;
-}
-.review-footer {
-  margin-top: 2rem;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
-  text-align: center;
-}
-.review-tags .tag {
+.btn-secondary {
   display: inline-block;
-  background: #d4a373;
-  color: #fff;
-  padding: 0.3rem 0.6rem;
+  padding: 0.5rem 1rem;
   border-radius: 4px;
-  margin: 0 0.2rem;
-  font-size: 0.85rem;
+  background: var(--highlight);
+  color: white;
+  text-decoration: none;
 }
 
-/* ----------------------------------------
-   Utility
----------------------------------------- */
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
+/* ── Footer ────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  background: rgba(0,0,0,0.05);
 }
-
-/* ----------------------------------------
-   Dark-mode Overrides for Single Page
----------------------------------------- */
-.dark .review-page {
-  background: #2c2c2c;
-  border-color: #444;
-}
-.dark .review-footer {
-  border-top-color: #555;
-}
-.dark .review-tags .tag {
-  background: #bc8a5f;
+.theme-dark .site-footer {
+  background: rgba(255,255,255,0.05);
 }
