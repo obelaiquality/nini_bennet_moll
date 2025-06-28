@@ -1,14 +1,14 @@
 ---
 title: "The Great Gatsby"
 author: "F. Scott Fitzgerald"
-date: 2025-06-30
-published: true
-cover: "/assets/images/gatsby.jpg"
-genre: "Fiction"
+date: 2025-06-30            # Review date
 publication_date: "1925-04-10"
 rating: 4.3
-tags: [classic, 1920s]
-featured: false
-excerpt: "A tragic tale of Jay Gatsby’s unrequited love and American dreams."
+cover: "/assets/images/gatsby.jpg"
+genre: "Fiction"
+tags: [klassiek, 1920s]
+featured: true
+excerpt: "‘The Great Gatsby’ is ’n tragiese portret van rykdom, verlange en die verlore Amerikaanse droom."
 ---
-A lush, tragic exploration of wealth, obsession, and the Roaring Twenties.
+
+F. Scott Fitzgerald se roman skilder ’n skerp beeld van die Jazz Era en die verlange van Jay Gatsby vir Daisy Buchanan. Die verhaal is gekenmerk deur weelderige partytjies, oordrewe rykdom en ’n onderliggende hartseer wat die illusie van geluk ontbloot. Fitzgerald se taalgebruik is liries en elegies terselfdertyd, wat ’n tydlose waarskuwing bied oor die gevare van obsessie en die onvermydelike verval van idealisme in ’n wêreld van oppervlakkigheid.
