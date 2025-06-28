@@ -2,7 +2,7 @@
 layout: post
 title: Fiela se Kind
 author: Dalene Matthee
-genre: Fiction
+genre: Fiksie
 publication_date: 1985-03-01T18:48:52.006Z
 rating: 3
 cover: /assets/images/fiela_se_kind.jpg
