@@ -236,3 +236,24 @@ a:hover {
 .theme-dark .site-footer {
   background: rgba(255,255,255,0.05);
 }
+
+/* ── Single Review Cover Image (floated top-right) ───────────────── */
+.review-cover-img {
+  float: right;
+  width: 200px;
+  max-width: 40%;
+  height: auto;
+  margin: 0 0 1rem 1rem;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Clear the float on smaller screens */
+@media (max-width: 600px) {
+  .review-cover-img {
+    float: none;
+    display: block;
+    margin: 0 auto 1rem;
+    max-width: 80%;
+  }
+}
