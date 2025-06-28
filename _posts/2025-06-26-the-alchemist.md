@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "The Alchemist"
 author: "Paulo Coelho"
 date: 2025-06-26            # Review date
