@@ -1,24 +1,25 @@
 /* ── CSS Variables ───────────────────────────────────────── */
 :root {
-  --brand-primary: #D98880;
-  --brand-accent:  #2E2E2E;
+  --brand-primary: #3B8EA5;   /* new teal */
+  --brand-accent:  #2C3E50;   /* deep slate for links/buttons */
   --bg-light:      #FDFDFD;
   --bg-dark:       #1F1F1F;
   --text-light:    #FFF;
   --text-dark:     #333;
-  --highlight:     #A3B18A;
+  --highlight:     #A3B18A;   /* soft olive highlight */
   --gold:          #F2C057;
 }
 
-/* Dark‐mode overrides */
+/* Dark-mode overrides */
 .theme-dark {
   --bg-light:   #1e1e1e;
   --bg-dark:    #121212;
-  --text-dark:  #eee;
-  --text-light: #fff;
+  --text-dark:  #EEE;
+  --text-light: #FFF;
+  --brand-accent: #88B0AC;   /* lighter accent on dark */
 }
 
-/* Dark‐mode text overrides */
+/* Dark-mode text overrides */
 .theme-dark h1,
 .theme-dark h2,
 .theme-dark h3,
