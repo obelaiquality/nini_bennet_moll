@@ -7,7 +7,7 @@ rating: 4.3
 cover: "/assets/images/gatsby.jpg"
 genre: "Fiction"
 tags: [klassiek, 1920s]
-featured: true
+featured: false
 excerpt: "‘The Great Gatsby’ is ’n tragiese portret van rykdom, verlange en die verlore Amerikaanse droom."
 ---
 
