@@ -40,65 +40,67 @@ title: Home
 <!-- MAIN GRID + SIDEBAR -->
 <div class="page-content">
   <aside class="sidebar">
-  <div class="filters">
-    <h2>Filters</h2>
+    <div class="filters">
+      <h2>Filters</h2>
 
-    <!-- SEARCH -->
-    <input type="text" id="search" placeholder="Search reviews…">
+      <!-- Search -->
+      <input
+        type="text"
+        id="search"
+        placeholder="Search reviews…">
 
-    <!-- AUTHOR -->
-    <select id="author-filter">
-      <option value="">All Authors</option>
-      {% assign authors = site.posts | map: "author" | uniq | sort %}
-      {% for author in authors %}
-        <option value="{{ author }}">{{ author }}</option>
-      {% endfor %}
-    </select>
+      <!-- Author -->
+      <select id="author-filter">
+        <option value="">All Authors</option>
+        {% assign authors = site.posts | map: "author" | uniq | sort %}
+        {% for author in authors %}
+          <option value="{{ author }}">{{ author }}</option>
+        {% endfor %}
+      </select>
 
-    <!-- GENRE -->
-    <select id="genre-filter">
-      <option value="">All Genres</option>
-      {% assign genres = site.posts | map: "genre" | uniq | sort %}
-      {% for g in genres %}
-        <option value="{{ g }}">{{ g }}</option>
-      {% endfor %}
-    </select>
+      <!-- Genre -->
+      <select id="genre-filter">
+        <option value="">All Genres</option>
+        {% assign genres = site.posts | map: "genre" | uniq | sort %}
+        {% for g in genres %}
+          <option value="{{ g }}">{{ g }}</option>
+        {% endfor %}
+      </select>
 
-    <!-- RATING -->
-    <select id="rating-filter">
-      <option value="">All Ratings</option>
-      {% for i in (0..10) %}
-        {% assign val = i | times: 0.5 %}
-        <option value="{{ val }}">{{ val }}+</option>
-      {% endfor %}
-    </select>
+      <!-- Rating -->
+      <select id="rating-filter">
+        <option value="">All Ratings</option>
+        {% for i in (0..10) %}
+          {% assign val = i | times: 0.5 %}
+          <option value="{{ val }}">{{ val }}+</option>
+        {% endfor %}
+      </select>
 
-    <!-- YEAR -->
-    <select id="year-filter">
-      <option value="">All Years</option>
-      {% assign years = site.posts
-        | map: "publication_date"
-        | map: "date"
-        | map: "year"
-        | uniq
-        | sort %}
-      {% for y in years %}
-        <option value="{{ y }}">{{ y }}</option>
-      {% endfor %}
-    </select>
+      <!-- Year -->
+      <select id="year-filter">
+        <option value="">All Years</option>
+        {% assign years = site.posts
+          | map: "date"
+          | map: "year"
+          | uniq
+          | sort %}
+        {% for y in years %}
+          <option value="{{ y }}">{{ y }}</option>
+        {% endfor %}
+      </select>
 
-  </div>
-</aside>
+    </div>
+  </aside>
 
   <main class="reviews">
     {% for post in site.posts %}
-      <article class="review-card"
-               data-author="{{ post.author }}"
-               data-tags="{{ post.tags | join:',' }}"
-               data-genre="{{ post.genre }}"
-               data-rating="{{ post.rating }}"
-               data-year="{{ post.publication_date | date: '%Y' }}"
-               data-excerpt="{{ post.excerpt | strip_html | escape }}">
+      <article
+        class="review-card"
+        data-author="{{ post.author }}"
+        data-genre="{{ post.genre }}"
+        data-rating="{{ post.rating }}"
+        data-year="{{ post.date | date: '%Y' }}"
+        data-excerpt="{{ post.excerpt | strip_html | escape }}">
         {% if post.cover %}
           <img
             src="{{ post.cover | relative_url }}"
