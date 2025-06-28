@@ -18,6 +18,22 @@
   --text-light: #fff;
 }
 
+/* Dark‐mode text overrides */
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark p,
+.theme-dark .section-heading,
+.theme-dark .featured-meta,
+.theme-dark .featured-title,
+.theme-dark .meta,
+.theme-dark .rating {
+  color: var(--text-light) !important;
+}
+.theme-dark a {
+  color: var(--text-light) !important;
+}
+
 /* ── Global ──────────────────────────────────────────── */
 body {
   margin: 0;
