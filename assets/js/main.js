@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Grab your review cards and filter controls
-  const posts         = document.querySelectorAll('.review-card');
-  const searchInput   = document.getElementById('search');
-  const authorFilter  = document.getElementById('author-filter');
-  const genreFilter   = document.getElementById('genre-filter');
-  const ratingFilter  = document.getElementById('rating-filter');
-  const yearFilter    = document.getElementById('year-filter');
-  const darkToggle = document.getElementById('theme-toggle');
+  // Review cards and filter controls
+  const posts        = document.querySelectorAll('.review-card');
+  const searchInput  = document.getElementById('search');
+  const authorFilter = document.getElementById('author-filter');
+  const genreFilter  = document.getElementById('genre-filter');
+  const ratingFilter = document.getElementById('rating-filter');
+  const yearFilter   = document.getElementById('year-filter');
+  const darkToggle   = document.getElementById('theme-toggle');
 
-  // 2. Dark‐mode toggle (now using 'theme-dark')
+  // Dark mode toggle
   if (darkToggle) {
     if (localStorage.getItem('dark') === 'true') {
       document.documentElement.classList.add('theme-dark');
@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. The actual filter function
+  // Filtering function
   function filterPosts() {
-    const q  = searchInput.value.toLowerCase();
-    const a  = authorFilter.value;
-    const g  = genreFilter.value;
-    const r  = parseFloat(ratingFilter.value) || 0;
-    const y  = yearFilter.value;
+    const q = searchInput.value.toLowerCase();
+    const a = authorFilter.value;
+    const g = genreFilter.value;
+    const r = parseFloat(ratingFilter.value) || 0;
+    const y = yearFilter.value;
 
     posts.forEach(card => {
       const title   = card.querySelector('h2').textContent.toLowerCase();
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Wire up events and run an initial filter
+  // Listen for filter changes
   [searchInput, authorFilter, genreFilter, ratingFilter, yearFilter]
     .forEach(el => el.addEventListener('input', filterPosts));
 
-  // run once on load
+  // Initial run
   filterPosts();
 });
