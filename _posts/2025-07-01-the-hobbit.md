@@ -8,7 +8,7 @@ genre: "Fantasy"
 publication_date: "1937-09-21"
 rating: 4.7
 tags: [adventure, fantasy]
-featured: true
+featured: false
 excerpt: "Bilbo Baggins embarks on a thrilling quest with dwarves to reclaim their homeland."
 ---
 A delightful prelude to the Lord of the Rings saga, full of wonder and wit.
