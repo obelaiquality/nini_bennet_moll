@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "The Great Gatsby"
 author: "F. Scott Fitzgerald"
 date: 2025-06-30            # Review date
