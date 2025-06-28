@@ -3,7 +3,6 @@ layout: default
 ---
 <article class="review-page">
 
-  <!-- Top metadata bar -->
   <header class="review-header">
     <h1 class="review-title">{{ page.title }}</h1>
     <p class="review-meta">
@@ -13,23 +12,20 @@ layout: default
       </time>
       · Gepubliseer: {{ page.publication_date }}
     </p>
+
     {% if page.rating %}
-      <p class="review-rating">Gradering: 
-        {% for i in (1..5) %}
-          {% if page.rating | float >= i %}
-            ★
-          {% elsif page.rating | float >= i - 0.5 %}
-            ☆
-          {% else %}
-            ☆
-          {% endif %}
-        {% endfor %}
+      <p class="review-rating">
+        Gradering:
+        {% assign full = page.rating | floor %}
+        {% assign half = page.rating | minus: full %}
+        {% for i in (1..full) %}★{% endfor %}
+        {% if half >= 0.5 %}½{% endif %}
         ({{ page.rating }}/5)
       </p>
     {% endif %}
+
     {% if page.tags %}
-      <p class="review-tags">
-        Onderwerpe:
+      <p class="review-tags">Onderwerpe:
         {% for tag in page.tags %}
           <span class="tag">{{ tag }}</span>
         {% endfor %}
@@ -39,21 +35,21 @@ layout: default
 
   <hr>
 
-  <!-- Optional author bio -->
   {% if page.author_bio %}
     <section class="review-author-bio">
-      <p>{{ page.author_bio }}</p>
+      {{ page.author_bio }}
     </section>
   {% endif %}
 
-  <!-- Cover image -->
   {% if page.cover %}
     <figure class="review-cover">
-      <img src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" loading="lazy">
+      <img
+        src="{{ page.cover | relative_url }}"
+        alt="{{ page.title }} cover"
+        loading="lazy">
     </figure>
   {% endif %}
 
-  <!-- Body -->
   <div class="review-body">
     {{ content }}
   </div>
@@ -61,5 +57,4 @@ layout: default
   <footer class="review-footer">
     <p>© {{ "now" | date: "%Y" }} {{ site.title }}</p>
   </footer>
-
 </article>
