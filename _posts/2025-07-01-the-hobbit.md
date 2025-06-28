@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "The Hobbit"
 author: "J.R.R. Tolkien"
 date: 2025-07-01            # Review date
