@@ -12,11 +12,11 @@
 
 /* Dark-mode overrides */
 .theme-dark {
-  --bg-light:    #1e1e1e;
-  --bg-dark:     #121212;
-  --text-dark:   #EEE;
-  --text-light:  #FFF;
-  --brand-accent:#88B0AC;
+  --bg-light:     #1e1e1e;
+  --bg-dark:      #121212;
+  --text-dark:    #EEE;
+  --text-light:   #FFF;
+  --brand-accent: #88B0AC;
 }
 
 /* Dark-mode text overrides */
@@ -227,10 +227,15 @@ a:hover {
 }
 
 /* ── Review Header Flex Layout ─────────────────────── */
+.review-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 .review-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
 }
