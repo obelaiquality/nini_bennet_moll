@@ -7,7 +7,7 @@ rating: 4.7
 cover: "/assets/images/hobbit.jpg"
 genre: "Fantasy"
 tags: [avontuur, fantasie]
-featured: true
+featured: false
 excerpt: "‘The Hobbit’ is ’n betowerende voorloper tot die Lord of the Rings met ’n epiese avontuur."
 ---
 
