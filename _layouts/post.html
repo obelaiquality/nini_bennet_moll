@@ -14,7 +14,6 @@ layout: default
     </p>
   </header>
 
-  <!-- COVER IMAGE -->
   {% if page.cover %}
     <img
       class="review-cover"
@@ -23,22 +22,18 @@ layout: default
       loading="lazy">
   {% endif %}
 
-  <!-- RATING -->
   {% if page.rating %}
     <p class="review-rating">★ {{ page.rating }}</p>
   {% endif %}
 
-  <!-- AUTHOR BIO -->
   {% if page.author_bio %}
     <p class="review-author-bio">{{ page.author_bio }}</p>
   {% endif %}
 
-  <!-- MAIN CONTENT -->
   <div class="review-body">
     {{ content }}
   </div>
 
-  <!-- TAGS -->
   {% if page.tags %}
     <div class="review-tags">
       {% for tag in page.tags %}
@@ -47,31 +42,7 @@ layout: default
     </div>
   {% endif %}
 
-  <!-- FOOTER -->
   <footer class="review-footer">
-    <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+    <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}.</p>
   </footer>
 </article>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Review",
-  "itemReviewed": {
-    "@type": "Book",
-    "name": "{{ page.title }}",
-    "author": "{{ page.author }}"{% if page.publication_date %},
-    "datePublished": "{{ page.publication_date }}"{% endif %}
-  },
-  "reviewRating": {
-    "@type": "Rating",
-    "ratingValue": "{{ page.rating }}",
-    "bestRating": "5"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "{{ page.author }}"
-  },
-  "reviewBody": "{{ content | strip_html | truncate: 160 }}"
-}
-</script>
