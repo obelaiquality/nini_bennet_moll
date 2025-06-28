@@ -2,20 +2,18 @@
    Base & Typography
 ---------------------------------------- */
 body {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 2rem;
   font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
   background: #f4f1ea;
   color: #333;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
-  line-height: 1.6;
 }
-
 h1, h2, h3 {
   font-family: Georgia, serif;
   margin-top: 0;
 }
-
 a {
   color: #6b4c3b;
   text-decoration: none;
@@ -46,6 +44,8 @@ a:hover {
   border: none;
   cursor: pointer;
 }
+
+/* Dark‐mode header background */
 .dark .site-header {
   background: #2c2c2c;
 }
@@ -66,6 +66,12 @@ a:hover {
 .btn:hover {
   background-color: #bc8a5f;
 }
+.btn-secondary {
+  background-color: #6b4c3b;
+}
+.btn-secondary:hover {
+  background-color: #59422f;
+}
 
 /* ----------------------------------------
    Dark Mode
@@ -74,7 +80,10 @@ a:hover {
   background: #1e1e1e;
   color: #eee;
 }
-.dark .review, .dark .review-page, .dark .featured-card, .dark .review-card {
+.dark .review,
+.dark .review-page,
+.dark .featured-card,
+.dark .review-card {
   background-color: #2c2c2c;
   border-color: #444;
 }
@@ -83,10 +92,35 @@ a:hover {
 }
 
 /* ----------------------------------------
+   Hero Section
+---------------------------------------- */
+.hero-section {
+  background: #d9825f; /* terracotta accent */
+  padding: 3rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.hero-title {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #fff;
+}
+.hero-subtitle {
+  margin-top: 0.5rem;
+  color: #f8eae0;
+}
+
+/* ----------------------------------------
    Featured Section
 ---------------------------------------- */
 .featured-section {
   margin-bottom: 2rem;
+}
+.section-heading {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 .featured-grid {
   display: flex;
@@ -110,10 +144,12 @@ a:hover {
   width: 100%;
   height: auto;
   border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 .featured-title {
   margin: 0.5rem 0;
   font-size: 1rem;
+  color: #333;
 }
 .featured-meta {
   font-size: 0.85rem;
@@ -121,12 +157,19 @@ a:hover {
 }
 
 /* ----------------------------------------
+   Page Layout: 2-column Flex
+---------------------------------------- */
+.page-content {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* ----------------------------------------
    Sidebar Filters
 ---------------------------------------- */
 .sidebar {
-  float: left;
-  width: 220px;
-  margin-right: 2rem;
+  flex: 0 0 220px;
 }
 .filters h2 {
   font-size: 1.2rem;
@@ -144,29 +187,46 @@ a:hover {
 }
 
 /* ----------------------------------------
-   Reviews List
+   Sort Controls
+---------------------------------------- */
+.sort-controls {
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.sort-controls label {
+  margin-right: 0.5rem;
+}
+
+/* ----------------------------------------
+   Reviews List (Cards)
 ---------------------------------------- */
 .reviews {
-  overflow: hidden; /* clear floats */
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 .review-card {
   background: #fff;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
-  display: inline-block;
-  vertical-align: top;
-  width: 280px;
-  margin-right: 1rem;
   transition: transform 0.2s ease;
+  flex: 1 1 calc(50% - 1.5rem);
+  max-width: calc(50% - 1.5rem);
 }
 .review-card:hover {
   transform: translateY(-4px);
 }
+@media (max-width: 600px) {
+  .review-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
 .cover-thumb {
   width: 100px;
-  height: auto;
   float: left;
   margin-right: 1rem;
   border-radius: 4px;
@@ -185,11 +245,9 @@ a:hover {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
-.btn-secondary {
-  background-color: #6b4c3b;
-}
-.btn-secondary:hover {
-  background-color: #59422f;
+.review-card p {
+  clear: both;
+  line-height: 1.4;
 }
 
 /* ----------------------------------------
@@ -219,7 +277,6 @@ a:hover {
 .review-cover {
   max-width: 300px;
   width: 100%;
-  height: auto;
   border-radius: 6px;
   margin: 1rem auto;
   display: block;
@@ -263,7 +320,7 @@ a:hover {
 }
 
 /* ----------------------------------------
-   Dark-mode overrides for new classes
+   Dark-mode Overrides for Single Page
 ---------------------------------------- */
 .dark .review-page {
   background: #2c2c2c;
