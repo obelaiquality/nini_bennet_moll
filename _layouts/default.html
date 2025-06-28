@@ -2,25 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>{{ page.title }} | {{ site.title }}</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="{{ '/assets/images/favicon.png' | relative_url }}" type="image/png">
-  <link rel="shortcut icon" href="{{ '/assets/images/favicon.png' | relative_url }}" type="image/png">
-
-  <!-- Main stylesheet -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
-
-<body class="{{ page.layout }}">
+<body class="{{ site.theme | default: 'theme-light' }}">
   <header class="site-header">
     <div class="site-branding">
-      <a href="{{ '/' | relative_url }}" class="site-logo">🏠</a>
-      <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+      <span class="site-logo">🏠</span>
+      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </div>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    <button class="theme-toggle" id="dark-toggle">🌙</button>
   </header>
 
   <main>
@@ -28,10 +20,9 @@
   </main>
 
   <footer class="site-footer">
-    <p>© {{ "now" | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+    &copy; {{ site.time | date: "%Y" }} {{ site.title }}.
   </footer>
 
-  <!-- Site scripts -->
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>
