@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const posts        = Array.from(document.querySelectorAll('.review-card'));
-  const searchInput  = document.getElementById('search');
-  const authorFilter = document.getElementById('author-filter');
-  const genreFilter  = document.getElementById('genre-filter');
-  const tagFilter    = document.getElementById('tag-filter');
-  const ratingFilter = document.getElementById('rating-filter');
-  const yearFilter   = document.getElementById('year-filter');
-  const sortOrder    = document.getElementById('sort-order');
-  const darkToggle   = document.getElementById('theme-toggle');
-  const reviewsParent= document.querySelector('.reviews');
+  const posts         = Array.from(document.querySelectorAll('.review-card'));
+  const searchInput   = document.getElementById('search');
+  const authorFilter  = document.getElementById('author-filter');
+  const genreFilter   = document.getElementById('genre-filter');
+  const tagFilter     = document.getElementById('tag-filter');
+  const ratingFilter  = document.getElementById('rating-filter');
+  const yearFilter    = document.getElementById('year-filter');
+  const sortOrder     = document.getElementById('sort-order');
+  const darkToggle    = document.getElementById('theme-toggle');
+  const reviewsParent = document.querySelector('.reviews');
 
   // Dark mode toggle
   if (darkToggle) {
@@ -49,14 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sort
     const order = sortOrder.value;
     visible.sort((a, b) => {
-      const revA = a.dataset.reviewDate;
-      const revB = b.dataset.reviewDate;
-      const ratA = parseFloat(a.dataset.rating) || 0;
-      const ratB = parseFloat(b.dataset.rating) || 0;
-      if (order === 'newest')      return revB.localeCompare(revA);
-      if (order === 'oldest')      return revA.localeCompare(revB);
-      if (order === 'high-rating') return ratB - ratA;
-      if (order === 'low-rating')  return ratA - ratB;
+      if (order === 'newest' || order === 'oldest') {
+        const da = new Date(a.dataset.reviewDate);
+        const db = new Date(b.dataset.reviewDate);
+        return order === 'newest' ? db - da : da - db;
+      }
+      if (order === 'pub-newest' || order === 'pub-oldest') {
+        const da = new Date(a.dataset.publicationDate);
+        const db = new Date(b.dataset.publicationDate);
+        return order === 'pub-newest' ? db - da : da - db;
+      }
+      if (order === 'rating-desc' || order === 'rating-asc') {
+        const ra = parseFloat(a.dataset.rating) || 0;
+        const rb = parseFloat(b.dataset.rating) || 0;
+        return order === 'rating-desc' ? rb - ra : ra - rb;
+      }
       return 0;
     });
 
@@ -65,9 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
     visible.forEach(card => reviewsParent.appendChild(card));
   }
 
-  // Event listeners
-  [searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder]
+  // Hook up events
+  [searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter]
     .forEach(el => el.addEventListener('input', applyFiltersAndSort));
+  sortOrder.addEventListener('change', applyFiltersAndSort);
 
+  // Initial
   applyFiltersAndSort();
 });
