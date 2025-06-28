@@ -3,45 +3,50 @@ layout: default
 ---
 <article class="review-page">
 
-  <!-- Top metadata bar with cover floated right -->
+  <!-- Top metadata bar as two-column flex -->
   <header class="review-header">
+    <div class="review-header-content">
+      <h1 class="review-title">{{ page.title }}</h1>
+      <p class="review-meta">
+        deur {{ page.author }} —
+        <time datetime="{{ page.date | date_to_xmlschema }}">
+          Resenseer: {{ page.date | date: "%b %d, %Y" }}
+        </time>
+        · Gepubliseer: {{ page.publication_date }}
+      </p>
+
+      {% if page.rating %}
+        <p class="review-rating">
+          Gradering:
+          {% assign full = page.rating | floor %}
+          {% assign half = page.rating | minus: full | times: 2 | round %}
+          {% for i in (1..5) %}
+            {% if i <= full %}★
+            {% elsif half == 1 and i == full | plus: 1 %}½
+            {% else %}☆{% endif %}
+          {% endfor %}
+          ({{ page.rating }}/5)
+        </p>
+      {% endif %}
+
+      {% if page.tags %}
+        <p class="review-tags">
+          Onderwerpe:
+          {% for tag in page.tags %}
+            <span class="tag">{{ tag }}</span>{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </p>
+      {% endif %}
+    </div>
+
     {% if page.cover %}
-      <img
-        src="{{ page.cover | relative_url }}"
-        alt="{{ page.title }} cover"
-        class="review-cover-img">
-    {% endif %}
-
-    <h1 class="review-title">{{ page.title }}</h1>
-    <p class="review-meta">
-      deur {{ page.author }} —
-      <time datetime="{{ page.date | date_to_xmlschema }}">
-        Resenseer: {{ page.date | date: "%b %d, %Y" }}
-      </time>
-      · Gepubliseer: {{ page.publication_date }}
-    </p>
-
-    {% if page.rating %}
-      <p class="review-rating">
-        Gradering:
-        {% assign full = page.rating | floor %}
-        {% assign half = page.rating | minus: full | times: 2 | round %}
-        {% for i in (1..5) %}
-          {% if i <= full %}★
-          {% elsif half == 1 and i == full | plus: 1 %}½
-          {% else %}☆{% endif %}
-        {% endfor %}
-        ({{ page.rating }}/5)
-      </p>
-    {% endif %}
-
-    {% if page.tags %}
-      <p class="review-tags">
-        Onderwerpe:
-        {% for tag in page.tags %}
-          <span class="tag">{{ tag }}</span>{% unless forloop.last %}, {% endunless %}
-        {% endfor %}
-      </p>
+      <figure class="review-cover-wrapper">
+        <img
+          src="{{ page.cover | relative_url }}"
+          alt="{{ page.title }} cover"
+          class="review-cover-img"
+          loading="lazy">
+      </figure>
     {% endif %}
   </header>
 
