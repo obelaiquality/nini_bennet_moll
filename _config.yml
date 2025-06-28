@@ -1,6 +1,6 @@
 # _config.yml
 future: true
-title: title: My Boekhoekie
+title: My Boekhoekie
 baseurl: ""                        # no sub-path, Netlify lives at root
 url: "https://boekresensies.netlify.app"
 
