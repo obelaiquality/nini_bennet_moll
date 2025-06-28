@@ -14,6 +14,29 @@ title: Home
   </div>
 </section>
 
+<!-- FEATURED REVIEWS -->
+<section class="featured-section">
+  <h2 class="section-heading">Uitgeligte Resensies</h2>
+  <div class="featured-grid">
+    {% for post in featured_posts %}
+      <div class="featured-card">
+        {% if post.cover %}
+          <img
+            src="{{ post.cover | relative_url }}"
+            alt="{{ post.title }} cover"
+            class="featured-thumb">
+        {% endif %}
+        <h3 class="featured-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
+        <p class="featured-meta">
+          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date }}
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
 <div class="page-content">
 
   <!-- SIDEBAR FILTERS -->
@@ -22,7 +45,10 @@ title: Home
       <h2>Filter</h2>
 
       <!-- Search -->
-      <input type="text" id="search" placeholder="Soek resensies…">
+      <input
+        type="text"
+        id="search"
+        placeholder="Soek resensies…">
 
       <!-- Author -->
       <select id="author-filter">
@@ -60,19 +86,15 @@ title: Home
         {% endfor %}
       </select>
 
-      <!-- Publication Year -->
-      {% comment %}
-        Build a string array of years from publication_date
-      {% endcomment %}
-      {% assign years = "" | split: "" %}
-      {% for post in site.posts %}
-        {% assign y = post.publication_date | date: "%Y" %}
-        {% assign years = years | push: y %}
-      {% endfor %}
-      {% assign years = years | uniq | sort %}
-
+      <!-- Year (Publication) -->
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
+        {% assign years = site.posts
+           | map: "publication_date"
+           | map: "date"
+           | map: "year"
+           | uniq
+           | sort %}
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
@@ -81,9 +103,9 @@ title: Home
     </div>
   </aside>
 
-  <!-- MAIN CONTENT & SORT -->
+  <!-- REVIEWS + SORT -->
   <main class="reviews">
-    <div class="sort-controls" style="text-align:center; margin-bottom:1rem;">
+    <div class="sort-controls">
       <label for="sort-order">Sorteer op:</label>
       <select id="sort-order">
         <option value="newest">Nuutste resensies</option>
@@ -93,30 +115,6 @@ title: Home
       </select>
     </div>
 
-    <!-- Featured Carousel -->
-    <section class="featured-section">
-      <h2 class="section-heading">Uitgeligte Resensies</h2>
-      <div class="featured-grid">
-        {% for post in featured_posts %}
-          <div class="featured-card">
-            {% if post.cover %}
-              <img
-                src="{{ post.cover | relative_url }}"
-                alt="{{ post.title }} cover"
-                class="featured-thumb">
-            {% endif %}
-            <h3 class="featured-title">
-              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </h3>
-            <p class="featured-meta">
-              deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date }}
-            </p>
-          </div>
-        {% endfor %}
-      </div>
-    </section>
-
-    <!-- Review Grid -->
     {% for post in site.posts %}
       <article
         class="review-card"
@@ -144,10 +142,9 @@ title: Home
           <p class="rating">★ {{ post.rating }}</p>
         {% endif %}
         <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
-          Lees Meer
-        </a>
+        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Lees Meer</a>
       </article>
     {% endfor %}
+
   </main>
 </div>
