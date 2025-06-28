@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Fiela se Kind
 author: Dalene Matthee
 genre: Fiction
