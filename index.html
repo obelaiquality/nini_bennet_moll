@@ -43,8 +43,14 @@ title: Home
   <aside class="sidebar">
     <div class="filters">
       <h2>Filter</h2>
-      <input type="text" id="search" placeholder="Soek resensies…">
 
+      <!-- Search -->
+      <input
+        type="text"
+        id="search"
+        placeholder="Soek resensies…">
+
+      <!-- Author -->
       <select id="author-filter">
         <option value="">Alle skrywers</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
@@ -53,6 +59,7 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Genre -->
       <select id="genre-filter">
         <option value="">Alle genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
@@ -61,6 +68,7 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Tags -->
       <select id="tag-filter">
         <option value="">Alle onderwerpe</option>
         {% assign tags = site.posts | map: "tags" | flatten | uniq | sort %}
@@ -69,6 +77,7 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Rating -->
       <select id="rating-filter">
         <option value="">Alle graderings</option>
         {% for i in (0..10) %}
@@ -77,18 +86,18 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Year (Publication) -->
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% assign years = site.posts
            | map: "publication_date"
-           | map: "split:'-'"   /* ["YYYY","MM","DD"] */
-           | map: "first"       /* "YYYY" */
            | uniq
            | sort %}
         {% for y in years %}
-          <option value="{{ y }}">{{ y }}</option>
+          <option value="{{ y | date: '%Y' }}">{{ y | date: '%Y' }}</option>
         {% endfor %}
       </select>
+
     </div>
   </aside>
 
@@ -134,5 +143,6 @@ title: Home
         <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Lees Meer</a>
       </article>
     {% endfor %}
+
   </main>
 </div>
