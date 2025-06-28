@@ -10,7 +10,7 @@ date: 2025-06-28T18:48:52.010Z
 featured: false
 author_bio: ""
 tags:
-  - klassiek
+  - Klassiek
 ---
 **Titel:** Fiela se Kind  
 **Skrywer:** Dalene Matthee  
