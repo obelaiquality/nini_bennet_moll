@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const genreFilter   = document.getElementById('genre-filter');
   const ratingFilter  = document.getElementById('rating-filter');
   const yearFilter    = document.getElementById('year-filter');
-  const darkToggle    = document.getElementById('dark-toggle');
+  const darkToggle = document.getElementById('theme-toggle');
 
   // 2. Dark‐mode toggle (now using 'theme-dark')
   if (darkToggle) {
