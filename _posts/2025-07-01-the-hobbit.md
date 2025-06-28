@@ -6,7 +6,7 @@ date: 2025-07-01            # Review date
 publication_date: "1937-09-21"
 rating: 4.7
 cover: "/assets/images/hobbit.jpg"
-genre: "Fantasy"
+genre: "Fantasie"
 tags: [avontuur, fantasie]
 featured: false
 excerpt: "‘The Hobbit’ is ’n betowerende voorloper tot die Lord of the Rings met ’n epiese avontuur."
