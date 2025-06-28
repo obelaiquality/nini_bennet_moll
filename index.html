@@ -2,102 +2,108 @@
 layout: default
 title: Home
 ---
-{% assign featured = site.posts | where: "featured", true %}
-{% assign latest_featured = featured | slice: 0,3 %}
+{% assign featured_posts = site.posts | where: "featured", true %}
 
-<!-- HERO -->
+<!-- HERO (intro placeholder) -->
 <section class="hero-section">
   <div class="hero-content">
-    {% if latest_featured.size > 0 %}
-      <h1 class="hero-title">Featured: {{ latest_featured[0].title }}</h1>
-      <p class="hero-author">by {{ latest_featured[0].author }}</p>
-    {% else %}
-      <h1 class="hero-title">{{ site.title }}</h1>
-      <p class="hero-author">Your home for book reviews</p>
-    {% endif %}
+    <h1 class="hero-title">Boekresensies vir entoesiaste</h1>
+    <p class="hero-subtitle">
+      Ontdek jou volgende gunsteling boek met ons insiggewende resensies.
+    </p>
   </div>
 </section>
 
 <!-- FEATURED REVIEWS -->
 <section class="featured-section">
-  <h2>Featured Reviews</h2>
+  <h2 class="section-heading">Uitgeligte Resensies</h2>
   <div class="featured-grid">
-    {% for post in latest_featured %}
-    <div class="featured-card">
-      {% if post.cover %}
-        <img src="{{ post.cover | relative_url }}"
-             alt="{{ post.title }} cover"
-             class="featured-thumb">
-      {% endif %}
-      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-      <p class="featured-meta">by {{ post.author }} &middot; {{ post.publication_date }}</p>
-    </div>
+    {% for post in featured_posts %}
+      <div class="featured-card">
+        {% if post.cover %}
+          <img
+            src="{{ post.cover | relative_url }}"
+            alt="{{ post.title }} cover"
+            class="featured-thumb">
+        {% endif %}
+        <h3 class="featured-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h3>
+        <p class="featured-meta">
+          deur {{ post.author }} &middot; {{ post.publication_date }}
+        </p>
+      </div>
     {% endfor %}
   </div>
 </section>
 
+<!-- MAIN GRID + SIDEBAR -->
 <div class="page-content">
-  <!-- SIDEBAR FILTERS -->
   <aside class="sidebar">
     <div class="filters">
       <h2>Filters</h2>
       <input type="text" id="search" placeholder="Search reviews…">
       <select id="author-filter">
         <option value="">All Authors</option>
-        {% assign authors = site.posts | map: "author" | uniq | sort %}
-        {% for author in authors %}
-        <option value="{{ author }}">{{ author }}</option>
+        {% for author in site.posts | map: "author" | uniq | sort %}
+          <option value="{{ author }}">{{ author }}</option>
         {% endfor %}
       </select>
       <select id="genre-filter">
         <option value="">All Genres</option>
-        {% assign genres = site.posts | map: "genre" | uniq | sort %}
-        {% for g in genres %}
-        <option value="{{ g }}">{{ g }}</option>
+        {% for g in site.posts | map: "genre" | uniq | sort %}
+          <option value="{{ g }}">{{ g }}</option>
         {% endfor %}
       </select>
       <select id="rating-filter">
         <option value="">All Ratings</option>
         {% for r in "0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5" | split: "," %}
-        <option value="{{ r }}">{{ r }}+</option>
+          <option value="{{ r }}">{{ r }}+</option>
         {% endfor %}
       </select>
       <select id="year-filter">
         <option value="">All Years</option>
-        {% assign years = site.posts
-          | map: "publication_date"
-          | map: "date"
-          | map: "year"
-          | uniq
-          | sort %}
-        {% for y in years %}
-        <option value="{{ y }}">{{ y }}</option>
+        {% for y in site.posts
+            | map: "publication_date"
+            | map: "date"
+            | map: "year"
+            | uniq
+            | sort %}
+          <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
     </div>
   </aside>
 
-  <!-- REVIEWS GRID -->
   <main class="reviews">
     {% for post in site.posts %}
-    <article class="review-card"
-             data-author="{{ post.author }}"
-             data-tags="{{ post.tags | join:',' }}"
-             data-genre="{{ post.genre }}"
-             data-rating="{{ post.rating }}"
-             data-year="{{ post.publication_date | date: '%Y' }}"
-             data-excerpt="{{ post.excerpt | strip_html | escape }}">
-      {% if post.cover %}
-      <img src="{{ post.cover | relative_url }}"
-           alt="{{ post.title }} cover"
-           class="cover-thumb">
-      {% endif %}
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p class="meta">by {{ post.author }} — {{ post.date | date: '%b %d, %Y' }}</p>
-      {% if post.rating %}<p class="rating">★ {{ post.rating }}</p>{% endif %}
-      <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-      <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Read More</a>
-    </article>
+      <article class="review-card"
+               data-author="{{ post.author }}"
+               data-tags="{{ post.tags | join:',' }}"
+               data-genre="{{ post.genre }}"
+               data-rating="{{ post.rating }}"
+               data-year="{{ post.publication_date | date: '%Y' }}"
+               data-excerpt="{{ post.excerpt | strip_html | escape }}">
+        {% if post.cover %}
+          <img
+            src="{{ post.cover | relative_url }}"
+            alt="{{ post.title }} cover"
+            class="cover-thumb">
+        {% endif %}
+        <h2>
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+        <p class="meta">
+          deur {{ post.author }} — {{ post.date | date: '%b %d, %Y' }}
+        </p>
+        {% if post.rating %}
+          <p class="rating">★ {{ post.rating }}</p>
+        {% endif %}
+        <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
+        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
+          Read More
+        </a>
+      </article>
     {% endfor %}
   </main>
 </div>
