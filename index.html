@@ -37,15 +37,20 @@ title: Home
   </div>
 </section>
 
-<!-- MAIN GRID + SORT + SIDEBAR -->
 <div class="page-content">
 
   <!-- SIDEBAR FILTERS -->
   <aside class="sidebar">
     <div class="filters">
       <h2>Filter</h2>
-      <input type="text" id="search" placeholder="Soek resensies…">
 
+      <!-- Search -->
+      <input
+        type="text"
+        id="search"
+        placeholder="Soek resensies…">
+
+      <!-- Author -->
       <select id="author-filter">
         <option value="">Alle skrywers</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
@@ -54,6 +59,7 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Genre -->
       <select id="genre-filter">
         <option value="">Alle genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
@@ -62,6 +68,16 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Tags -->
+      <select id="tag-filter">
+        <option value="">Alle onderwerpe</option>
+        {% assign tags = site.posts | map: "tags" | flatten | uniq | sort %}
+        {% for tag in tags %}
+          <option value="{{ tag }}">{{ tag }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Rating -->
       <select id="rating-filter">
         <option value="">Alle graderings</option>
         {% for i in (0..10) %}
@@ -70,6 +86,7 @@ title: Home
         {% endfor %}
       </select>
 
+      <!-- Year (Publication) -->
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% assign years = site.posts
@@ -85,9 +102,8 @@ title: Home
     </div>
   </aside>
 
+  <!-- REVIEWS GRID + SORT CONTROLS -->
   <main class="reviews">
-
-    <!-- SORT CONTROLS -->
     <div class="sort-controls" style="text-align:center; margin-bottom:1rem;">
       <label for="sort-order">Sorteer op:</label>
       <select id="sort-order">
@@ -103,6 +119,7 @@ title: Home
         class="review-card"
         data-author="{{ post.author }}"
         data-genre="{{ post.genre }}"
+        data-tags="{{ post.tags | join:',' }}"
         data-rating="{{ post.rating }}"
         data-year="{{ post.publication_date | date: '%Y' }}"
         data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
@@ -122,11 +139,8 @@ title: Home
           <p class="rating">★ {{ post.rating }}</p>
         {% endif %}
         <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
-          Lees Meer
-        </a>
+        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Lees Meer</a>
       </article>
     {% endfor %}
-
   </main>
 </div>
