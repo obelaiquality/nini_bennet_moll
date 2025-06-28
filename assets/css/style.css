@@ -1,22 +1,22 @@
 /* ── CSS Variables ───────────────────────────────────────── */
 :root {
-  --brand-primary: #3B8EA5;   /* new teal */
-  --brand-accent:  #2C3E50;   /* deep slate for links/buttons */
+  --brand-primary: #3B8EA5;
+  --brand-accent:  #2C3E50;
   --bg-light:      #FDFDFD;
   --bg-dark:       #1F1F1F;
   --text-light:    #FFF;
   --text-dark:     #333;
-  --highlight:     #A3B18A;   /* soft olive highlight */
+  --highlight:     #A3B18A;
   --gold:          #F2C057;
 }
 
 /* Dark-mode overrides */
 .theme-dark {
-  --bg-light:   #1e1e1e;
-  --bg-dark:    #121212;
-  --text-dark:  #EEE;
-  --text-light: #FFF;
-  --brand-accent: #88B0AC;   /* lighter accent on dark */
+  --bg-light:    #1e1e1e;
+  --bg-dark:     #121212;
+  --text-dark:   #EEE;
+  --text-light:  #FFF;
+  --brand-accent:#88B0AC;
 }
 
 /* Dark-mode text overrides */
@@ -226,6 +226,40 @@ a:hover {
   text-decoration: none;
 }
 
+/* ── Review Header Flex Layout ─────────────────────── */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.review-header-content {
+  flex: 1;
+}
+.review-cover-wrapper {
+  flex-shrink: 0;
+  margin: 0;
+}
+.review-cover-img {
+  width: 140px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+@media (max-width: 640px) {
+  .review-header {
+    display: block;
+  }
+  .review-cover-wrapper {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .review-cover-img {
+    width: 60%;
+  }
+}
+
 /* ── Footer ────────────────────────────────────────── */
 .site-footer {
   text-align: center;
@@ -235,25 +269,4 @@ a:hover {
 }
 .theme-dark .site-footer {
   background: rgba(255,255,255,0.05);
-}
-
-/* ── Single Review Cover Image (floated top-right) ───────────────── */
-.review-cover-img {
-  float: right;
-  width: 200px;
-  max-width: 40%;
-  height: auto;
-  margin: 0 0 1rem 1rem;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-/* Clear the float on smaller screens */
-@media (max-width: 600px) {
-  .review-cover-img {
-    float: none;
-    display: block;
-    margin: 0 auto 1rem;
-    max-width: 80%;
-  }
 }
