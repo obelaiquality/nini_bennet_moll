@@ -80,10 +80,10 @@ title: Home
       <select id="year-filter">
         <option value="">All Years</option>
         {% assign years = site.posts
-          | map: "date"
-          | map: "year"
-          | uniq
-          | sort %}
+           | map: "date"
+           | map: "year"
+           | uniq
+           | sort %}
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
