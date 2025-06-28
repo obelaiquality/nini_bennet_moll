@@ -3,7 +3,15 @@ layout: default
 ---
 <article class="review-page">
 
+  <!-- Top metadata bar with cover floated right -->
   <header class="review-header">
+    {% if page.cover %}
+      <img
+        src="{{ page.cover | relative_url }}"
+        alt="{{ page.title }} cover"
+        class="review-cover-img">
+    {% endif %}
+
     <h1 class="review-title">{{ page.title }}</h1>
     <p class="review-meta">
       deur {{ page.author }} —
@@ -17,17 +25,21 @@ layout: default
       <p class="review-rating">
         Gradering:
         {% assign full = page.rating | floor %}
-        {% assign half = page.rating | minus: full %}
-        {% for i in (1..full) %}★{% endfor %}
-        {% if half >= 0.5 %}½{% endif %}
+        {% assign half = page.rating | minus: full | times: 2 | round %}
+        {% for i in (1..5) %}
+          {% if i <= full %}★
+          {% elsif half == 1 and i == full | plus: 1 %}½
+          {% else %}☆{% endif %}
+        {% endfor %}
         ({{ page.rating }}/5)
       </p>
     {% endif %}
 
     {% if page.tags %}
-      <p class="review-tags">Onderwerpe:
+      <p class="review-tags">
+        Onderwerpe:
         {% for tag in page.tags %}
-          <span class="tag">{{ tag }}</span>
+          <span class="tag">{{ tag }}</span>{% unless forloop.last %}, {% endunless %}
         {% endfor %}
       </p>
     {% endif %}
@@ -35,21 +47,14 @@ layout: default
 
   <hr>
 
+  <!-- Optional author bio -->
   {% if page.author_bio %}
     <section class="review-author-bio">
-      {{ page.author_bio }}
+      <p>{{ page.author_bio }}</p>
     </section>
   {% endif %}
 
-  {% if page.cover %}
-    <figure class="review-cover">
-      <img
-        src="{{ page.cover | relative_url }}"
-        alt="{{ page.title }} cover"
-        loading="lazy">
-    </figure>
-  {% endif %}
-
+  <!-- Body -->
   <div class="review-body">
     {{ content }}
   </div>
