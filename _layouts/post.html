@@ -1,32 +1,56 @@
 ---
 layout: default
 ---
-<article class="review">
-  <h2>{{ page.title }}</h2>
-  <p class="meta">by {{ page.author }} — {{ page.date | date: '%B %d, %Y' }}</p>
+<article class="review-page">
+  <!-- HEADER -->
+  <header class="review-header">
+    <h1 class="review-title">{{ page.title }}</h1>
+    <p class="review-meta">
+      deur {{ page.author }} &mdash;
+      Resenseer: {{ page.date | date: "%b %d, %Y" }}
+      {% if page.publication_date %}
+        &middot; Gepubliseer: {{ page.publication_date }}
+      {% endif %}
+    </p>
+  </header>
 
-  {% if page.author_bio %}
-    <p class="author-bio">{{ page.author_bio }}</p>
-  {% endif %}
-
+  <!-- COVER IMAGE -->
   {% if page.cover %}
-    <img src="{{ page.cover | relative_url }}"
-         alt="{{ page.title }} cover"
-         class="cover"
-         loading="lazy">
+    <img
+      class="review-cover"
+      src="{{ page.cover | relative_url }}"
+      alt="{{ page.title }} cover"
+      loading="lazy">
   {% endif %}
 
+  <!-- RATING -->
   {% if page.rating %}
-    <p class="rating" data-rating="{{ page.rating }}"></p>
+    <p class="review-rating">★ {{ page.rating }}</p>
   {% endif %}
 
-  <div class="content">
+  <!-- AUTHOR BIO -->
+  {% if page.author_bio %}
+    <p class="review-author-bio">{{ page.author_bio }}</p>
+  {% endif %}
+
+  <!-- MAIN CONTENT -->
+  <div class="review-body">
     {{ content }}
   </div>
 
+  <!-- TAGS -->
   {% if page.tags %}
-    <p class="tags">Tags: {{ page.tags | array_to_sentence_string }}</p>
+    <div class="review-tags">
+      {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
   {% endif %}
+
+  <!-- FOOTER -->
+  <footer class="review-footer">
+    <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+  </footer>
 </article>
 
 <script type="application/ld+json">
@@ -36,8 +60,8 @@ layout: default
   "itemReviewed": {
     "@type": "Book",
     "name": "{{ page.title }}",
-    "author": "{{ page.author }}",
-    "datePublished": "{{ page.publication_date }}"
+    "author": "{{ page.author }}"{% if page.publication_date %},
+    "datePublished": "{{ page.publication_date }}"{% endif %}
   },
   "reviewRating": {
     "@type": "Rating",
@@ -46,8 +70,8 @@ layout: default
   },
   "author": {
     "@type": "Person",
-    "name": "Nini Bennett Moll"
+    "name": "{{ page.author }}"
   },
-  "reviewBody": "{{ page.excerpt | strip_html | truncate: 160 }}"
+  "reviewBody": "{{ content | strip_html | truncate: 160 }}"
 }
 </script>
