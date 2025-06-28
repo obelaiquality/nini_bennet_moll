@@ -1,5 +1,5 @@
 backend:
-  name: identity
+  name: git-gateway
   repo: obelaiquality/nini_bennet_moll
   branch: main
 
