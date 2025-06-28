@@ -61,18 +61,23 @@ title: Home
       </select>
 
       <!-- Publication Year -->
+      {% comment %}
+        Build a string array of years from publication_date
+      {% endcomment %}
       {% assign years = "" | split: "" %}
       {% for post in site.posts %}
         {% assign y = post.publication_date | date: "%Y" %}
         {% assign years = years | push: y %}
       {% endfor %}
       {% assign years = years | uniq | sort %}
+
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
+
     </div>
   </aside>
 
@@ -83,10 +88,8 @@ title: Home
       <select id="sort-order">
         <option value="newest">Nuutste resensies</option>
         <option value="oldest">Oudste resensies</option>
-        <option value="pub-newest">Nuutste publikasie</option>
-        <option value="pub-oldest">Oudste publikasie</option>
-        <option value="rating-desc">Beste graderings</option>
-        <option value="rating-asc">Laagste graderings</option>
+        <option value="high-rating">Beste graderings</option>
+        <option value="low-rating">Laagste graderings</option>
       </select>
     </div>
 
@@ -122,8 +125,7 @@ title: Home
         data-tags="{{ post.tags | join:',' }}"
         data-rating="{{ post.rating }}"
         data-year="{{ post.publication_date | date: '%Y' }}"
-        data-review-date="{{ post.date | date: '%Y-%m-%dT%H:%M:%S' }}"
-        data-publication-date="{{ post.publication_date }}"
+        data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
         data-excerpt="{{ post.excerpt | strip_html | escape }}">
         {% if post.cover %}
           <img
