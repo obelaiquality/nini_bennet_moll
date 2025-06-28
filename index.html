@@ -41,54 +41,54 @@ title: Home
 <div class="page-content">
   <aside class="sidebar">
     <div class="filters">
-      <h2>Filters</h2>
-
-      <!-- Search -->
+      <h2>Filter</h2>
+  
+      <!-- Soek -->
       <input
         type="text"
         id="search"
-        placeholder="Search reviews…">
-
-      <!-- Author -->
+        placeholder="Soek resensies…">
+  
+      <!-- Skrywers -->
       <select id="author-filter">
-        <option value="">All Authors</option>
+        <option value="">Alle skrywers</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
         {% for author in authors %}
           <option value="{{ author }}">{{ author }}</option>
         {% endfor %}
       </select>
-
+  
       <!-- Genre -->
       <select id="genre-filter">
-        <option value="">All Genres</option>
+        <option value="">Alle genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
         {% for g in genres %}
           <option value="{{ g }}">{{ g }}</option>
         {% endfor %}
       </select>
-
-      <!-- Rating -->
+  
+      <!-- Graderings -->
       <select id="rating-filter">
-        <option value="">All Ratings</option>
+        <option value="">Alle graderings</option>
         {% for i in (0..10) %}
           {% assign val = i | times: 0.5 %}
           <option value="{{ val }}">{{ val }}+</option>
         {% endfor %}
       </select>
-
-      <!-- Year -->
+  
+      <!-- Jare -->
       <select id="year-filter">
-        <option value="">All Years</option>
+        <option value="">Alle jare</option>
         {% assign years = site.posts
-           | map: "date"
-           | map: "year"
-           | uniq
-           | sort %}
+          | map: "date"
+          | map: "year"
+          | uniq
+          | sort %}
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
-
+  
     </div>
   </aside>
 
