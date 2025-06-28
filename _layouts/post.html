@@ -2,47 +2,64 @@
 layout: default
 ---
 <article class="review-page">
-  <!-- HEADER -->
+
+  <!-- Top metadata bar -->
   <header class="review-header">
     <h1 class="review-title">{{ page.title }}</h1>
     <p class="review-meta">
-      deur {{ page.author }} &mdash;
-      Resenseer: {{ page.date | date: "%b %d, %Y" }}
-      {% if page.publication_date %}
-        &middot; Gepubliseer: {{ page.publication_date }}
-      {% endif %}
+      deur {{ page.author }} —
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        Resenseer: {{ page.date | date: "%b %d, %Y" }}
+      </time>
+      · Gepubliseer: {{ page.publication_date }}
     </p>
+    {% if page.rating %}
+      <p class="review-rating">Gradering: 
+        {% for i in (1..5) %}
+          {% if page.rating | float >= i %}
+            ★
+          {% elsif page.rating | float >= i - 0.5 %}
+            ☆
+          {% else %}
+            ☆
+          {% endif %}
+        {% endfor %}
+        ({{ page.rating }}/5)
+      </p>
+    {% endif %}
+    {% if page.tags %}
+      <p class="review-tags">
+        Onderwerpe:
+        {% for tag in page.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </p>
+    {% endif %}
   </header>
 
-  {% if page.cover %}
-    <img
-      class="review-cover"
-      src="{{ page.cover | relative_url }}"
-      alt="{{ page.title }} cover"
-      loading="lazy">
-  {% endif %}
+  <hr>
 
-  {% if page.rating %}
-    <p class="review-rating">★ {{ page.rating }}</p>
-  {% endif %}
-
+  <!-- Optional author bio -->
   {% if page.author_bio %}
-    <p class="review-author-bio">{{ page.author_bio }}</p>
+    <section class="review-author-bio">
+      <p>{{ page.author_bio }}</p>
+    </section>
   {% endif %}
 
+  <!-- Cover image -->
+  {% if page.cover %}
+    <figure class="review-cover">
+      <img src="{{ page.cover | relative_url }}" alt="{{ page.title }} cover" loading="lazy">
+    </figure>
+  {% endif %}
+
+  <!-- Body -->
   <div class="review-body">
     {{ content }}
   </div>
 
-  {% if page.tags %}
-    <div class="review-tags">
-      {% for tag in page.tags %}
-        <span class="tag">{{ tag }}</span>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   <footer class="review-footer">
-    <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}.</p>
+    <p>© {{ "now" | date: "%Y" }} {{ site.title }}</p>
   </footer>
+
 </article>
