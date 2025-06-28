@@ -7,7 +7,7 @@ publication_date: "1988-04-15"
 rating: 4.5
 cover: "/assets/images/alchemist.jpg"
 genre: "Fiksie"
-tags: [inspirerend, avontuur]
+tags: [Inspirerend, Avontuur]
 featured: true
 excerpt: "‘The Alchemist’ leer ons om ons drome te volg en die tekens van die lewe te lees."
 ---
