@@ -2,7 +2,12 @@
 layout: default
 title: Home
 ---
-{% assign featured_posts = site.posts | where: "featured", true %}
+{% comment %}
+  1. Hero section
+  2. Featured carousel: selects boolean featured: true, sorts by review date descending
+  3. Filters sidebar
+  4. Sort controls + reviews grid
+{% endcomment %}
 
 <!-- HERO -->
 <section class="hero-section">
@@ -14,17 +19,25 @@ title: Home
   </div>
 </section>
 
+{% comment %}
+  Build and sort the featured-posts collection
+{% endcomment %}
+{% assign featured_posts = site.posts
+   | where_exp: "post", "post.featured == true"
+   | sort: "date"
+   | reverse %}
+
 {% if featured_posts.size > 0 %}
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
-  <div class="featured-grid">
+  <div class="featured-grid" id="featured-carousel">
     {% for post in featured_posts %}
       <div class="featured-card">
         {% if post.cover %}
           <img
             src="{{ post.cover | relative_url }}"
-            alt="{{ post.title }} omslag"
+            alt="{{ post.title }} cover"
             class="featured-thumb">
         {% endif %}
         <h3 class="featured-title">
@@ -93,7 +106,6 @@ title: Home
         {% assign years = years | push: y %}
       {% endfor %}
       {% assign years = years | uniq | sort %}
-
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% for y in years %}
@@ -105,6 +117,8 @@ title: Home
 
   <!-- MAIN CONTENT & SORT CONTROLS -->
   <main>
+
+    <!-- Dropdown sort -->
     <div class="sort-controls">
       <label for="sort-order">Sorteer op:</label>
       <select id="sort-order">
@@ -115,6 +129,15 @@ title: Home
       </select>
     </div>
 
+    <!-- Extra sort buttons (A→Z, ★) -->
+    <div class="extra-sort-controls">
+      <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
+      <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
+      <button id="sort-rating-asc" class="btn btn-secondary">★ ↑</button>
+      <button id="sort-rating-desc"class="btn btn-secondary">★ ↓</button>
+    </div>
+
+    <!-- REVIEW GRID -->
     <div class="reviews">
       {% for post in site.posts %}
         <article
@@ -126,39 +149,40 @@ title: Home
           data-year="{{ post.publication_date | date: '%Y' }}"
           data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
           data-excerpt="{{ post.excerpt | strip_html | escape }}">
-
+          
           {% if post.cover %}
             <img
               src="{{ post.cover | relative_url }}"
-              alt="{{ post.title }} omslag"
+              alt="{{ post.title }} cover"
               class="cover-thumb">
           {% endif %}
-
+          
           <h2>
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
-
+          
           <p class="meta">
             deur {{ post.author }} — Resenseer:
             {{ post.date | date: '%b %d, %Y' }}
           </p>
-
+          
           <p class="meta">
             Gepubliseer:
             {{ post.publication_date | date: '%Y-%m-%d' }}
           </p>
-
+          
           {% if post.rating %}
             <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
-
+          
           <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-
+          
           <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
             Lees Meer
           </a>
         </article>
       {% endfor %}
     </div>
+
   </main>
 </div>
