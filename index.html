@@ -4,14 +4,10 @@ title: Home
 ---
 
 {% comment %}
-  Fetch all posts where `featured: true` (boolean), 
-  sort them by publication_date, then reverse so newest appears first.
+  Simply grab every post where `featured` is the boolean true.
+  (We’ve removed the sort/reverse here to avoid the Array-vs-Array comparison error.)
 {% endcomment %}
-{% assign featured_posts = site.posts
-  | where: "featured", true
-  | sort: "publication_date"
-  | reverse
-%}
+{% assign featured_posts = site.posts | where: "featured", true %}
 
 <!-- HERO -->
 <section class="hero-section">
