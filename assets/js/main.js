@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const r = parseFloat(ratingFilter.value) || 0;
     const y = yearFilter.value;
 
+    // 1) filter
     let visible = posts.filter(card => {
       const title   = card.querySelector('h2').textContent.toLowerCase();
       const excerpt = (card.dataset.excerpt || '').toLowerCase();
@@ -31,27 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const tags    = (card.dataset.tags || '').split(',');
       const rating  = parseFloat(card.dataset.rating) || 0;
       const year    = card.dataset.year;
-
       return (title.includes(q) || excerpt.includes(q))
-        && (!a || auth === a)
-        && (!g || genre === g)
-        && (!t || tags.includes(t))
-        && (!ratingFilter.value || rating >= r)
-        && (!y || year === y);
+          && (!a || auth === a)
+          && (!g || genre === g)
+          && (!t || tags.includes(t))
+          && (!ratingFilter.value || rating >= r)
+          && (!y || year === y);
     });
 
-    // decide sort key
+    // 2) sort
     const order = orderOverride || sortOrder.value;
-
     visible.sort((A, B) => {
-      const revA = A.dataset.reviewDate;
-      const revB = B.dataset.reviewDate;
-      const ratA = parseFloat(A.dataset.rating) || 0;
-      const ratB = parseFloat(B.dataset.rating) || 0;
+      const revA   = A.dataset.reviewDate;
+      const revB   = B.dataset.reviewDate;
+      const ratA   = parseFloat(A.dataset.rating) || 0;
+      const ratB   = parseFloat(B.dataset.rating) || 0;
       const titleA = A.querySelector('h2').textContent.toLowerCase();
       const titleB = B.querySelector('h2').textContent.toLowerCase();
-
-      switch(order) {
+      switch (order) {
         case 'newest':      return revB.localeCompare(revA);
         case 'oldest':      return revA.localeCompare(revB);
         case 'high-rating': return ratB - ratA;
@@ -64,21 +62,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // re-render
+    // 3) render
     reviewsParent.innerHTML = '';
     visible.forEach(c => reviewsParent.appendChild(c));
   }
 
-  // wire up existing filters + sort dropdown
-  [searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder]
+  // wire up filters + dropdown
+  [ searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder ]
     .forEach(el => el.addEventListener('input', () => applyFiltersAndSort()));
 
-  // wire in the new buttons
-  alphaAscBtn.addEventListener ('click', () => applyFiltersAndSort('alpha-asc'));
+  // wire up the four buttons
+  alphaAscBtn .addEventListener('click', () => applyFiltersAndSort('alpha-asc'));
   alphaDescBtn.addEventListener('click', () => applyFiltersAndSort('alpha-desc'));
-  ratingAscBtn.addEventListener ('click', () => applyFiltersAndSort('rating-asc'));
+  ratingAscBtn.addEventListener('click', () => applyFiltersAndSort('rating-asc'));
   ratingDescBtn.addEventListener('click', () => applyFiltersAndSort('rating-desc'));
 
-  // initial render
+  // initial show
   applyFiltersAndSort();
 });
