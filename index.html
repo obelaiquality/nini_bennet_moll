@@ -2,12 +2,7 @@
 layout: default
 title: Home
 ---
-
-{% comment %}
-  Grab every post where front-matter `featured` is the boolean true.
-  Using `where_exp` avoids the subtle type-mismatch that kept returning an empty list.
-{% endcomment %}
-{% assign featured_posts = site.posts | where_exp: "p", "p.featured" %}
+{% assign featured_posts = site.posts | where: "featured", true %}
 
 <!-- HERO -->
 <section class="hero-section">
@@ -19,7 +14,6 @@ title: Home
   </div>
 </section>
 
-{% if featured_posts.size > 0 %}
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
@@ -37,13 +31,12 @@ title: Home
         </h3>
         <p class="featured-meta">
           deur {{ post.author }} &middot;
-          Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          Gepubliseer: {{ post.publication_date | split: "T" | first }}
         </p>
       </div>
     {% endfor %}
   </div>
 </section>
-{% endif %}
 
 <div class="page-content">
 
@@ -93,9 +86,9 @@ title: Home
 
       <!-- Publication Year -->
       {% assign years = "" | split: "" %}
-      {% for p in site.posts %}
-        {% assign year = p.publication_date | date: "%Y" %}
-        {% assign years = years | push: year %}
+      {% for post in site.posts %}
+        {% assign y = post.publication_date | split: "T" | first | slice: 0,4 %}
+        {% assign years = years | push: y %}
       {% endfor %}
       {% assign years = years | uniq | sort %}
 
@@ -121,6 +114,14 @@ title: Home
       </select>
     </div>
 
+    <!-- A→Z & ★ sort buttons -->
+    <div class="extra-sort-controls">
+      <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
+      <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
+      <button id="sort-rating-asc" class="btn btn-secondary">★ ↑</button>
+      <button id="sort-rating-desc"class="btn btn-secondary">★ ↓</button>
+    </div>
+
     <!-- REVIEW GRID -->
     <div class="reviews">
       {% for post in site.posts %}
@@ -130,7 +131,7 @@ title: Home
           data-genre="{{ post.genre }}"
           data-tags="{{ post.tags | join:',' }}"
           data-rating="{{ post.rating }}"
-          data-year="{{ post.publication_date | date: '%Y' }}"
+          data-year="{{ post.publication_date | split: 'T' | first | slice: 0,4 }}"
           data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
           data-excerpt="{{ post.excerpt | strip_html | escape }}">
           
@@ -152,7 +153,7 @@ title: Home
           
           <p class="meta">
             Gepubliseer:
-            {{ post.publication_date | date: '%Y-%m-%d' }}
+            {{ post.publication_date | split: "T" | first }}
           </p>
           
           {% if post.rating %}
