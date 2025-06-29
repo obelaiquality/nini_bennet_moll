@@ -1,301 +1,84 @@
-/* ── CSS Variables & Dark Mode ───────────────────────────────────────── */
-:root {
-  --brand-primary: #3B8EA5;
-  --brand-accent:  #2C3E50;
-  --bg-light:      #FDFDFD;
-  --bg-dark:       #1F1F1F;
-  --text-light:    #FFF;
-  --text-dark:     #333;
-  --highlight:     #A3B18A;
-  --gold:          #F2C057;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const posts         = Array.from(document.querySelectorAll('.review-card'));
+  const searchInput   = document.getElementById('search');
+  const authorFilter  = document.getElementById('author-filter');
+  const genreFilter   = document.getElementById('genre-filter');
+  const tagFilter     = document.getElementById('tag-filter');
+  const ratingFilter  = document.getElementById('rating-filter');
+  const yearFilter    = document.getElementById('year-filter');
+  const sortOrder     = document.getElementById('sort-order');
+  const reviewsParent = document.querySelector('.reviews');
 
-.theme-dark {
-  --bg-light:     #1e1e1e;
-  --bg-dark:      #121212;
-  --text-dark:    #EEE;
-  --text-light:   #FFF;
-  --brand-accent: #88B0AC;
-}
+  // new buttons
+  const alphaAscBtn   = document.getElementById('sort-alpha-asc');
+  const alphaDescBtn  = document.getElementById('sort-alpha-desc');
+  const ratingAscBtn  = document.getElementById('sort-rating-asc');
+  const ratingDescBtn = document.getElementById('sort-rating-desc');
 
-.theme-dark h1,
-.theme-dark h2,
-.theme-dark h3,
-.theme-dark p,
-.theme-dark a,
-.theme-dark .section-heading,
-.theme-dark .featured-meta,
-.theme-dark .featured-title,
-.theme-dark .meta,
-.theme-dark .rating {
-  color: var(--text-light) !important;
-}
+  function applyFiltersAndSort(orderOverride) {
+    const q = searchInput.value.toLowerCase();
+    const a = authorFilter.value;
+    const g = genreFilter.value;
+    const t = tagFilter.value;
+    const r = parseFloat(ratingFilter.value) || 0;
+    const y = yearFilter.value;
 
-/* ── Global ──────────────────────────────────────────── */
-body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  background: var(--bg-light);
-  color: var(--text-dark);
-  transition: background 0.3s, color 0.3s;
-}
+    let visible = posts.filter(card => {
+      const title   = card.querySelector('h2').textContent.toLowerCase();
+      const excerpt = (card.dataset.excerpt || '').toLowerCase();
+      const auth    = card.dataset.author;
+      const genre   = card.dataset.genre;
+      const tags    = (card.dataset.tags || '').split(',');
+      const rating  = parseFloat(card.dataset.rating) || 0;
+      const year    = card.dataset.year;
 
-.theme-dark body {
-  background: var(--bg-light);
-  color: var(--text-light);
-}
+      return (title.includes(q) || excerpt.includes(q))
+        && (!a || auth === a)
+        && (!g || genre === g)
+        && (!t || tags.includes(t))
+        && (!ratingFilter.value || rating >= r)
+        && (!y || year === y);
+    });
 
-a {
-  color: var(--brand-accent);
-  text-decoration: none;
-}
+    // decide sort key
+    const order = orderOverride || sortOrder.value;
 
-a:hover {
-  text-decoration: underline;
-}
+    visible.sort((A, B) => {
+      const revA = A.dataset.reviewDate;
+      const revB = B.dataset.reviewDate;
+      const ratA = parseFloat(A.dataset.rating) || 0;
+      const ratB = parseFloat(B.dataset.rating) || 0;
+      const titleA = A.querySelector('h2').textContent.toLowerCase();
+      const titleB = B.querySelector('h2').textContent.toLowerCase();
 
-/* ── Header ──────────────────────────────────────────── */
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: var(--bg-light);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+      switch(order) {
+        case 'newest':      return revB.localeCompare(revA);
+        case 'oldest':      return revA.localeCompare(revB);
+        case 'high-rating': return ratB - ratA;
+        case 'low-rating':  return ratA - ratB;
+        case 'alpha-asc':   return titleA.localeCompare(titleB);
+        case 'alpha-desc':  return titleB.localeCompare(titleA);
+        case 'rating-asc':  return ratA - ratB;
+        case 'rating-desc': return ratB - ratA;
+        default:            return 0;
+      }
+    });
 
-.theme-dark .site-header {
-  background: var(--bg-dark);
-}
-
-.site-branding {
-  display: flex;
-  align-items: center;
-}
-
-.site-logo {
-  font-size: 1.5rem;
-}
-
-.site-title {
-  font-family: 'Merriweather', serif;
-  font-size: 1.75rem;
-  margin-left: 0.75rem;
-}
-
-.theme-toggle {
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* ── Hero Intro Section ───────────────────────────────── */
-.hero-section {
-  background-color: var(--brand-primary);
-  padding: 3rem 1rem;
-  text-align: center;
-}
-
-.hero-content {
-  max-width: 600px;
-  margin: 0 auto;
-  color: var(--text-light);
-}
-
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-/* ── Featured Carousel ───────────────────────────────── */
-.featured-section {
-  background: var(--bg-light);
-  padding: 2rem 1rem;
-  margin-bottom: 2rem;
-}
-
-.theme-dark .featured-section {
-  background: var(--bg-dark);
-}
-
-.section-heading {
-  font-family: 'Merriweather', serif;
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.featured-grid {
-  position: relative;
-  overflow: hidden;
-  height: 280px;
-}
-
-.featured-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.5s;
-  text-align: center;
-}
-
-.featured-card.active {
-  opacity: 1;
-}
-
-.featured-thumb {
-  width: 160px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin: 0 auto;
-}
-
-.featured-title {
-  font-size: 1rem;
-  margin: 0.75rem 0 0.25rem;
-}
-
-.featured-meta {
-  font-size: 0.8rem;
-  color: #555;
-}
-
-/* ── Page Layout ───────────────────────────────────── */
-.page-content {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 2rem;
-  padding: 0 1rem 2rem;
-}
-
-/* ── Sidebar Filters ───────────────────────────────── */
-.filters {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.filters input,
-.filters select {
-  padding: 0.6rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* ── Reviews Grid ──────────────────────────────────── */
-.reviews {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-/* ── Single Review Card ─────────────────────────────── */
-.review-card {
-  background: var(--bg-light);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
-}
-
-.theme-dark .review-card {
-  background: var(--bg-dark);
-}
-
-.review-card:hover {
-  transform: translateY(-4px);
-}
-
-.cover-thumb {
-  width: 80px;
-  height: auto;
-  float: left;
-  margin: 0 1rem 1rem 0;
-  border-radius: 4px;
-}
-
-.review-card h2 {
-  margin-top: 0;
-}
-
-.meta,
-.rating {
-  font-size: 0.85rem;
-  color: #666;
-  margin: 0.5rem 0;
-}
-
-.btn-secondary {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  background: var(--highlight);
-  color: white;
-  text-decoration: none;
-}
-
-/* ── Single Post Page ──────────────────────────────── */
-.review-page {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.review-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.review-header-content {
-  flex: 1;
-}
-
-.review-cover-wrapper {
-  flex-shrink: 0;
-}
-
-.review-cover-img {
-  width: 140px;
-  height: auto;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-@media (max-width: 640px) {
-  .review-header {
-    display: block;
+    // re-render
+    reviewsParent.innerHTML = '';
+    visible.forEach(c => reviewsParent.appendChild(c));
   }
-  .review-cover-wrapper {
-    text-align: center;
-    margin-top: 1rem;
-  }
-  .review-cover-img {
-    width: 60%;
-  }
-}
 
-/* ── Footer ────────────────────────────────────────── */
-.site-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.9rem;
-  background: rgba(0,0,0,0.05);
-}
+  // wire up existing filters + sort dropdown
+  [searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder]
+    .forEach(el => el.addEventListener('input', () => applyFiltersAndSort()));
 
-.theme-dark .site-footer {
-  background: rgba(255,255,255,0.05);
-}
+  // wire in the new buttons
+  alphaAscBtn.addEventListener ('click', () => applyFiltersAndSort('alpha-asc'));
+  alphaDescBtn.addEventListener('click', () => applyFiltersAndSort('alpha-desc'));
+  ratingAscBtn.addEventListener ('click', () => applyFiltersAndSort('rating-asc'));
+  ratingDescBtn.addEventListener('click', () => applyFiltersAndSort('rating-desc'));
+
+  // initial render
+  applyFiltersAndSort();
+});
