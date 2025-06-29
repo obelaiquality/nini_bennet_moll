@@ -9,19 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortOrder     = document.getElementById('sort-order');
   const reviewsParent = document.querySelector('.reviews');
 
-  // only the carousel section below hero
+  // carousel elements
   const featuredGrid  = document.getElementById('featured-carousel');
   const featuredCards = featuredGrid
     ? Array.from(featuredGrid.querySelectorAll('.featured-card'))
     : [];
 
-  // sort buttons
+  // extra sort buttons
   const alphaAscBtn   = document.getElementById('sort-alpha-asc');
   const alphaDescBtn  = document.getElementById('sort-alpha-desc');
   const ratingAscBtn  = document.getElementById('sort-rating-asc');
   const ratingDescBtn = document.getElementById('sort-rating-desc');
 
-  // filter + sort routine
+  // filter + sort
   function applyFiltersAndSort(orderOverride) {
     const q = searchInput.value.toLowerCase();
     const a = authorFilter.value;
@@ -73,11 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     visible.forEach(c => reviewsParent.appendChild(c));
   }
 
-  // wire up filters + dropdown
+  // wire filters + sort dropdown
   [ searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder ]
     .forEach(el => el.addEventListener('input', () => applyFiltersAndSort()));
 
-  // wire up sort buttons
+  // wire extra sort buttons
   alphaAscBtn  .addEventListener('click', () => applyFiltersAndSort('alpha-asc'));
   alphaDescBtn .addEventListener('click', () => applyFiltersAndSort('alpha-desc'));
   ratingAscBtn .addEventListener('click', () => applyFiltersAndSort('rating-asc'));
@@ -86,18 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // initial render
   applyFiltersAndSort();
 
-  // ——— featured-carousel rotation only ———
+  // ——— featured carousel rotation with .active ———
   if (featuredCards.length > 0) {
     let idx = 0;
-    // show only the first card
+    // initialize
     featuredCards.forEach((card, i) => {
       card.style.opacity = i === 0 ? '1' : '0';
+      card.classList.toggle('active', i === 0);
     });
     // rotate every 5s
     setInterval(() => {
       featuredCards[idx].style.opacity = '0';
+      featuredCards[idx].classList.remove('active');
       idx = (idx + 1) % featuredCards.length;
       featuredCards[idx].style.opacity = '1';
+      featuredCards[idx].classList.add('active');
     }, 5000);
   }
 });

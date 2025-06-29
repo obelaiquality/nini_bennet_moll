@@ -324,3 +324,16 @@ a:hover {
 .theme-dark .site-footer {
   background: rgba(255,255,255,0.05);
 }
+
+/* ——— Featured Carousel Stacking & Click Fix ——— */
+.featured-section .featured-card {
+  /* hide under cards and disable clicks by default */
+  pointer-events: none;
+  z-index: 0;
+}
+
+.featured-section .featured-card.active {
+  /* allow clicks only on the visible card */
+  pointer-events: auto;
+  z-index: 1;
+}
