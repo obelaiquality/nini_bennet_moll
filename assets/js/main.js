@@ -1,101 +1,77 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('main.js loaded'); // <— verify this appears in your console
+  // — Dark toggle (already in default.html) —
 
-  // grab everything once:
-  const searchEl   = document.getElementById('search');
-  const authorEl   = document.getElementById('author-filter');
-  const genreEl    = document.getElementById('genre-filter');
-  const tagEl      = document.getElementById('tag-filter');
-  const ratingEl   = document.getElementById('rating-filter');
-  const yearEl     = document.getElementById('year-filter');
-  const sortEl     = document.getElementById('sort-order');
-  const reviewsDiv = document.querySelector('.reviews-list');
-  const cards      = Array.from(reviewsDiv.querySelectorAll('.review-card'));
-  const toggle     = document.getElementById('theme-toggle');
-  const heroItems  = Array.from(document.querySelectorAll('.featured-item'));
-
-  // — Dark-mode (unified on localStorage.theme) —
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.classList.add('theme-dark');
-    toggle.textContent = '☀️';
+  // — Featured carousel auto-rotate —
+  const featured = Array.from(document.querySelectorAll('.featured-card'));
+  let idx = 0;
+  function showFeatured(i) {
+    featured.forEach((c, j) => c.classList.toggle('active', j === i));
   }
-  toggle.addEventListener('click', () => {
-    const nowDark = document.documentElement.classList.toggle('theme-dark');
-    toggle.textContent = nowDark ? '☀️' : '🌙';
-    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
-  });
-
-  // — Featured carousel —
-  if (heroItems.length > 0) {
-    let idx = 0;
-    // show only the first at start
-    heroItems.forEach((el,i) => el.style.display = i === 0 ? 'block' : 'none');
+  if (featured.length) {
+    showFeatured(0);
     setInterval(() => {
-      heroItems[idx].style.display = 'none';
-      idx = (idx + 1) % heroItems.length;
-      heroItems[idx].style.display = 'block';
-    }, 5000);
+      idx = (idx + 1) % featured.length;
+      showFeatured(idx);
+    }, 4000);
   }
 
-  // — Filters & Sort —  
-  function refresh() {
-    const q = searchEl.value.toLowerCase();
-    const a = authorEl.value;
-    const g = genreEl.value;
-    const t = tagEl.value;
-    const r = parseFloat(ratingEl.value) || 0;
-    const y = yearEl.value;
+  // — Filters & Sorting —
+  const posts        = Array.from(document.querySelectorAll('.review-card'));
+  const searchInput  = document.getElementById('search');
+  const authorFilter = document.getElementById('author-filter');
+  const genreFilter  = document.getElementById('genre-filter');
+  const tagFilter    = document.getElementById('tag-filter');
+  const ratingFilter = document.getElementById('rating-filter');
+  const yearFilter   = document.getElementById('year-filter');
+  const sortOrder    = document.getElementById('sort-order');
+  const reviewsParent= document.querySelector('.reviews');
 
-    // 1) filter
-    let visible = cards.filter(c => {
-      const txt   = (c.dataset.title + c.textContent).toLowerCase();
-      const auth  = c.dataset.author;
-      const gen   = c.dataset.genre;
-      const tags  = c.dataset.tags.split(',');
-      const rate  = parseFloat(c.dataset.rating) || 0;
-      const date  = c.dataset.date;
+  function applyFiltersAndSort() {
+    const q = searchInput.value.toLowerCase();
+    const a = authorFilter.value;
+    const g = genreFilter.value;
+    const t = tagFilter.value;
+    const r = parseFloat(ratingFilter.value) || 0;
+    const y = yearFilter.value;
 
-      return (
-        txt.includes(q) &&
-        (!a || auth === a) &&
-        (!g || gen === g) &&
-        (!t || tags.includes(t)) &&
-        (!ratingEl.value || rate >= r) &&
-        (!y || date.startsWith(y))
-      );
+    let visible = posts.filter(card => {
+      const title   = card.querySelector('h2').textContent.toLowerCase();
+      const excerpt = (card.dataset.excerpt||'').toLowerCase();
+      const auth    = card.dataset.author;
+      const genre   = card.dataset.genre;
+      const tags    = (card.dataset.tags||'').split(',');
+      const rating  = parseFloat(card.dataset.rating)||0;
+      const year    = card.dataset.year;
+
+      return (title.includes(q) || excerpt.includes(q))
+          && (!a || auth === a)
+          && (!g || genre === g)
+          && (!t || tags.includes(t))
+          && (!ratingFilter.value || rating >= r)
+          && (!y || year === y);
     });
 
-    // 2) sort
-    visible.sort((A, B) => {
-      const o = sortEl.value;
-
-      if (o === 'newest' || o === 'oldest') {
-        return o === 'newest'
-          ? B.dataset.date.localeCompare(A.dataset.date)
-          : A.dataset.date.localeCompare(B.dataset.date);
-      }
-      if (o === 'high-rating' || o === 'low-rating') {
-        const a = parseFloat(A.dataset.rating), b = parseFloat(B.dataset.rating);
-        return o === 'high-rating' ? b - a : a - b;
-      }
-      if (o === 'az' || o === 'za') {
-        const a = A.dataset.title.toLowerCase(), b = B.dataset.title.toLowerCase();
-        return o === 'az' ? a.localeCompare(b) : b.localeCompare(a);
-      }
+    // Sort
+    const order = sortOrder.value;
+    visible.sort((A,B) => {
+      const revA = A.dataset.reviewDate;
+      const revB = B.dataset.reviewDate;
+      const ratA = parseFloat(A.dataset.rating)||0;
+      const ratB = parseFloat(B.dataset.rating)||0;
+      if (order==='newest')      return revB.localeCompare(revA);
+      if (order==='oldest')      return revA.localeCompare(revB);
+      if (order==='high-rating') return ratB - ratA;
+      if (order==='low-rating')  return ratA - ratB;
       return 0;
     });
 
-    // 3) re-render just the cards
-    reviewsDiv.innerHTML = '';
-    visible.forEach(c => reviewsDiv.appendChild(c));
+    // Re-render
+    reviewsParent.innerHTML = '';
+    visible.forEach(card => reviewsParent.appendChild(card));
   }
 
-  // wire up all controls
-  [searchEl, authorEl, genreEl, tagEl, ratingEl, yearEl].forEach(el =>
-    el.addEventListener('input', refresh)
-  );
-  sortEl.addEventListener('change', refresh);
+  [searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder]
+    .forEach(el => el.addEventListener('input', applyFiltersAndSort));
 
-  // initial
-  refresh();
+  applyFiltersAndSort();
 });
