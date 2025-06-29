@@ -30,7 +30,8 @@ title: Home
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
         <p class="featured-meta">
-          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
+          deur {{ post.author }} &middot;
+          Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
         </p>
       </div>
     {% endfor %}
@@ -106,8 +107,8 @@ title: Home
       </select>
     </div>
 
-    <!-- EXTRA SORT BUTTONS -->
-    <div class="extra-sort-controls" style="text-align:center; margin:1.5rem 0;">
+    <!-- our new buttons -->
+    <div class="extra-sort-controls">
       <button id="sort-alpha-asc" class="btn btn-secondary">A → Z</button>
       <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
       <button id="sort-rating-asc" class="btn btn-secondary">★↑</button>
@@ -125,7 +126,6 @@ title: Home
         data-year="{{ post.publication_date | date: '%Y' }}"
         data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
         data-excerpt="{{ post.excerpt | strip_html | escape }}">
-
         {% if post.cover %}
           <img
             src="{{ post.cover | relative_url }}"
@@ -133,16 +133,16 @@ title: Home
             class="cover-thumb">
         {% endif %}
 
-        <h2>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h2>
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
 
         <p class="meta">
-          deur {{ post.author }} — Resenseer: {{ post.date | date: '%b %d, %Y' }}
+          deur {{ post.author }} — Resenseer:
+          {{ post.date | date: '%b %d, %Y' }}
         </p>
 
         <p class="meta">
-          Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
+          Gepubliseer:
+          {{ post.publication_date | date: '%Y-%m-%d' }}
         </p>
 
         {% if post.rating %}
@@ -150,7 +150,6 @@ title: Home
         {% endif %}
 
         <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-
         <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
           Lees Meer
         </a>
