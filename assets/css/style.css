@@ -115,10 +115,15 @@ a:hover {
 }
 
 /* ── Featured Carousel ───────────────────────────────── */
+/* ── Wider Featured Carousel ───────────────────────────────── */
 .featured-section {
-  background: var(--bg-light);
-  padding: 2rem 1rem;
-  margin-bottom: 2rem;
+  /* override any inherited max-width: */
+  max-width: none;
+  /* let it span the full viewport: */
+  width: 100%;
+  /* give it some breathing room on the sides: */
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 .theme-dark .featured-section {
@@ -134,10 +139,13 @@ a:hover {
 
 /* ── Featured Carousel ────────────────────────────────── */
 .featured-grid {
-  display: flex;
-  gap: 1rem;
+  /* start the scroll at the left edge */
+  justify-content: flex-start;
+  /* you can tweak the gap to taste */
+  gap: 1.5rem;
+  /* keep the horizontal scroll if too many cards */
   overflow-x: auto;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .featured-card {
