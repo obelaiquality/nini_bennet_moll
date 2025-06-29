@@ -46,28 +46,28 @@
     <p>© {{ "now" | date: "%Y" }} {{ site.title }}. Alle regte voorbehou.</p>
   </footer>
 
-  <!-- Dark-mode toggle -->
+  <!-- Dark-mode toggle (unified on localStorage.theme) -->
   <script>
     ;(function () {
-      const root = document.documentElement;
+      const root   = document.documentElement;
       const toggle = document.getElementById('theme-toggle');
+
+      // Apply saved theme on load
       if (localStorage.getItem('theme') === 'dark') {
         root.classList.add('theme-dark');
         toggle.textContent = '☀️';
       }
+
+      // Toggle on click
       toggle.addEventListener('click', () => {
-        if (root.classList.toggle('theme-dark')) {
-          localStorage.setItem('theme', 'dark');
-          toggle.textContent = '☀️';
-        } else {
-          localStorage.setItem('theme', 'light');
-          toggle.textContent = '🌙';
-        }
+        const nowDark = root.classList.toggle('theme-dark');
+        toggle.textContent = nowDark ? '☀️' : '🌙';
+        localStorage.setItem('theme', nowDark ? 'dark' : 'light');
       });
     })();
   </script>
 
-  <!-- Your site’s main JS -->
+  <!-- Main filters, sort & featured carousel script -->
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>
