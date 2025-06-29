@@ -7,10 +7,15 @@ title: Home
 <!-- HERO -->
 <section class="hero-section">
   <div class="hero-content">
-    <h1 class="hero-title">Boekresensies vir entoesiaste</h1>
-    <p class="hero-subtitle">
-      Ontdek jou volgende gunsteling boek met ons insiggewende resensies.
-    </p>
+    {% if featured_posts.size > 0 %}
+      <h1 class="hero-title">{{ featured_posts[0].title }}</h1>
+      <p class="hero-subtitle">
+        deur {{ featured_posts[0].author }} · {{ featured_posts[0].publication_date }}
+      </p>
+    {% else %}
+      <h1 class="hero-title">Boekresensies vir entoesiaste</h1>
+      <p class="hero-subtitle">Ontdek jou volgende gunsteling boek met ons insiggewende resensies.</p>
+    {% endif %}
   </div>
 </section>
 
@@ -21,10 +26,8 @@ title: Home
     <div class="filters">
       <h2>Filter</h2>
 
-      <!-- Search -->
       <input type="text" id="search" placeholder="Soek resensies…">
 
-      <!-- Author -->
       <select id="author-filter">
         <option value="">Alle skrywers</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
@@ -33,7 +36,6 @@ title: Home
         {% endfor %}
       </select>
 
-      <!-- Genre -->
       <select id="genre-filter">
         <option value="">Alle genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
@@ -42,7 +44,6 @@ title: Home
         {% endfor %}
       </select>
 
-      <!-- Tags -->
       <select id="tag-filter">
         <option value="">Alle onderwerpe</option>
         {% assign tags = site.posts | map: "tags" | flatten | uniq | sort %}
@@ -51,7 +52,6 @@ title: Home
         {% endfor %}
       </select>
 
-      <!-- Rating -->
       <select id="rating-filter">
         <option value="">Alle graderings</option>
         {% for i in (0..10) %}
@@ -60,10 +60,6 @@ title: Home
         {% endfor %}
       </select>
 
-      <!-- Publication Year -->
-      {% comment %}
-        Build a string array of years from publication_date
-      {% endcomment %}
       {% assign years = "" | split: "" %}
       {% for post in site.posts %}
         {% assign y = post.publication_date | date: "%Y" %}
@@ -77,19 +73,20 @@ title: Home
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
-
     </div>
   </aside>
 
   <!-- MAIN CONTENT & SORT -->
   <main class="reviews">
-    <div class="sort-controls" style="text-align:center; margin-bottom:1rem;">
+    <div class="sort-controls">
       <label for="sort-order">Sorteer op:</label>
       <select id="sort-order">
-        <option value="newest">Nuutste resensies</option>
-        <option value="oldest">Oudste resensies</option>
+        <option value="newest">Nuutste</option>
+        <option value="oldest">Oudste</option>
         <option value="high-rating">Beste graderings</option>
         <option value="low-rating">Laagste graderings</option>
+        <option value="alpha-asc">A–Z</option>
+        <option value="alpha-desc">Z–A</option>
       </select>
     </div>
 
@@ -100,23 +97,16 @@ title: Home
         {% for post in featured_posts %}
           <div class="featured-card">
             {% if post.cover %}
-              <img
-                src="{{ post.cover | relative_url }}"
-                alt="{{ post.title }} cover"
-                class="featured-thumb">
+              <img src="{{ post.cover | relative_url }}" class="featured-thumb" alt="">
             {% endif %}
-            <h3 class="featured-title">
-              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </h3>
-            <p class="featured-meta">
-              deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date }}
-            </p>
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            <p>deur {{ post.author }} · {{ post.publication_date }}</p>
           </div>
         {% endfor %}
       </div>
     </section>
 
-    <!-- Review Grid -->
+    <!-- All Reviews -->
     {% for post in site.posts %}
       <article
         class="review-card"
@@ -124,29 +114,16 @@ title: Home
         data-genre="{{ post.genre }}"
         data-tags="{{ post.tags | join:',' }}"
         data-rating="{{ post.rating }}"
-        data-year="{{ post.publication_date | date: '%Y' }}"
-        data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
-        data-excerpt="{{ post.excerpt | strip_html | escape }}">
+        data-date="{{ post.date | date: '%Y-%m-%d' }}"
+        data-title="{{ post.title }}">
         {% if post.cover %}
-          <img
-            src="{{ post.cover | relative_url }}"
-            alt="{{ post.title }} cover"
-            class="cover-thumb">
+          <img src="{{ post.cover | relative_url }}" class="cover-thumb" alt="">
         {% endif %}
-        <h2>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h2>
-        <p class="meta">
-          deur {{ post.author }} — Resenseer: {{ post.date | date: '%b %d, %Y' }}
-        </p>
-        <p class="meta">Gepubliseer: {{ post.publication_date }}</p>
-        {% if post.rating %}
-          <p class="rating">★ {{ post.rating }}</p>
-        {% endif %}
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <p>deur {{ post.author }} — {{ post.date | date: '%b %d, %Y' }}</p>
+        {% if post.rating %}<p>★ {{ post.rating }}</p>{% endif %}
         <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
-          Lees Meer
-        </a>
+        <a href="{{ post.url | relative_url }}" class="btn btn-secondary">Lees Meer</a>
       </article>
     {% endfor %}
   </main>

@@ -1,12 +1,10 @@
 backend:
   name: git-gateway
-  repo: obelaiquality/nini_bennet_moll
   branch: main
-
-publish_mode: editorial_workflow
 
 media_folder: "assets/images"
 public_folder: "/assets/images"
+publish_mode: editorial_workflow
 
 collections:
   - name: "posts"
@@ -15,17 +13,16 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "Layout", name: "layout", widget: "hidden", default: "post" }
-      - { label: "Uitgelig", name: "featured", widget: "hidden", default: false }
-      - { label: "Titel", name: "title", widget: "string" }
-      - { label: "Skrywer", name: "author", widget: "string" }
-      - { label: "Genre", name: "genre", widget: "string" }
+      - { label: "Layout",    name: "layout",        widget: "hidden",  default: "post" }
+      - { label: "Uitgelig",  name: "featured",      widget: "boolean", default: false }
+      - { label: "Titel",     name: "title",         widget: "string" }
+      - { label: "Skrywer",   name: "author",        widget: "string" }
+      - { label: "Genre",     name: "genre",         widget: "string" }
       - { label: "Publikasiedatum", name: "publication_date", widget: "datetime" }
-      - { label: "Gradering", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
-      - { label: "Omslagprent (Cover)", name: "cover", widget: "image" }
-      - { label: "Resensiedatum", name: "date", widget: "datetime" }
-      - { label: "Uitgelig", name: "featured", widget: "boolean", default: false }
+      - { label: "Gradering",  name: "rating",        widget: "number", value_type: "float", min: 0, max: 5, step: 0.5 }
+      - { label: "Omslagprent",name: "cover",         widget: "image" }
+      - { label: "Resensiedatum", name: "date",        widget: "datetime" }
       - { label: "Skrywer-biografie", name: "author_bio", widget: "text", required: false }
-      - { label: "Onderwerpe (Tags)", name: "tags", widget: "list", default: [] }
-      - { label: "Uittreksel", name: "excerpt", widget: "text", required: false }
-      - { label: "Volle Inhoud (Body)", name: "body", widget: "markdown" }
+      - { label: "Onderwerpe", name: "tags",          widget: "list", default: [] }
+      - { label: "Uittreksel", name: "excerpt",       widget: "text", required: false }
+      - { label: "Volle Inhoud", name: "body",        widget: "markdown" }
