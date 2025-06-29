@@ -359,3 +359,16 @@ a:hover {
   /* nudge the flex row down just in case */
   margin-top: 1rem;
 }
+
+.featured-section {
+  /* bump the whole block down from the hero */
+  padding-top: 3rem;
+}
+.featured-section .section-heading {
+  /* ensure extra room between the H2 and the cards */
+  margin-bottom: 1.5rem;
+}
+.featured-grid {
+  /* a little extra breathing room before the first row of cards */
+  margin-top: 1rem;
+}
