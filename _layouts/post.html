@@ -9,10 +9,10 @@ layout: default
       <h1 class="review-title">{{ page.title }}</h1>
       <p class="review-meta">
         deur {{ page.author }} —
-        <time datetime="{{ page.date | date_to_xmlschema }}">
-          Resenseer: {{ page.date | date: "%b %d, %Y" }}
-        </time>
-        · Gepubliseer: {{ page.publication_date }}
+        Resenseer: {{ page.date | date: "%Y-%m-%d" }}
+        &middot;
+        {% assign pub_parts = page.publication_date | split: " " %}
+        Gepubliseer: {{ pub_parts[0] }}
       </p>
 
       {% if page.rating %}
