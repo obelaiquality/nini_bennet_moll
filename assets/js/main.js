@@ -9,12 +9,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortOrder     = document.getElementById('sort-order');
   const reviewsParent = document.querySelector('.reviews');
 
-  // new buttons
+  // hero elements
+  const heroTitle     = document.querySelector('.hero-title');
+  const heroSubtitle  = document.querySelector('.hero-subtitle');
+
+  // featured carousel elements
+  const featuredGrid  = document.getElementById('featured-carousel');
+  const featuredCards = featuredGrid
+    ? Array.from(featuredGrid.querySelectorAll('.featured-card'))
+    : [];
+
+  // sort buttons
   const alphaAscBtn   = document.getElementById('sort-alpha-asc');
   const alphaDescBtn  = document.getElementById('sort-alpha-desc');
   const ratingAscBtn  = document.getElementById('sort-rating-asc');
   const ratingDescBtn = document.getElementById('sort-rating-desc');
 
+  // filter + sort routine
   function applyFiltersAndSort(orderOverride) {
     const q = searchInput.value.toLowerCase();
     const a = authorFilter.value;
@@ -23,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const r = parseFloat(ratingFilter.value) || 0;
     const y = yearFilter.value;
 
-    // 1) filter
     let visible = posts.filter(card => {
       const title   = card.querySelector('h2').textContent.toLowerCase();
       const excerpt = (card.dataset.excerpt || '').toLowerCase();
@@ -32,15 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const tags    = (card.dataset.tags || '').split(',');
       const rating  = parseFloat(card.dataset.rating) || 0;
       const year    = card.dataset.year;
+
       return (title.includes(q) || excerpt.includes(q))
-          && (!a || auth === a)
-          && (!g || genre === g)
-          && (!t || tags.includes(t))
-          && (!ratingFilter.value || rating >= r)
-          && (!y || year === y);
+        && (!a || auth === a)
+        && (!g || genre === g)
+        && (!t || tags.includes(t))
+        && (!ratingFilter.value || rating >= r)
+        && (!y || year === y);
     });
 
-    // 2) sort
     const order = orderOverride || sortOrder.value;
     visible.sort((A, B) => {
       const revA   = A.dataset.reviewDate;
@@ -49,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ratB   = parseFloat(B.dataset.rating) || 0;
       const titleA = A.querySelector('h2').textContent.toLowerCase();
       const titleB = B.querySelector('h2').textContent.toLowerCase();
+
       switch (order) {
         case 'newest':      return revB.localeCompare(revA);
         case 'oldest':      return revA.localeCompare(revB);
@@ -62,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 3) render
     reviewsParent.innerHTML = '';
     visible.forEach(c => reviewsParent.appendChild(c));
   }
@@ -71,12 +81,43 @@ document.addEventListener('DOMContentLoaded', () => {
   [ searchInput, authorFilter, genreFilter, tagFilter, ratingFilter, yearFilter, sortOrder ]
     .forEach(el => el.addEventListener('input', () => applyFiltersAndSort()));
 
-  // wire up the four buttons
-  alphaAscBtn .addEventListener('click', () => applyFiltersAndSort('alpha-asc'));
-  alphaDescBtn.addEventListener('click', () => applyFiltersAndSort('alpha-desc'));
-  ratingAscBtn.addEventListener('click', () => applyFiltersAndSort('rating-asc'));
+  // wire up sort buttons
+  alphaAscBtn  .addEventListener('click', () => applyFiltersAndSort('alpha-asc'));
+  alphaDescBtn .addEventListener('click', () => applyFiltersAndSort('alpha-desc'));
+  ratingAscBtn .addEventListener('click', () => applyFiltersAndSort('rating-asc'));
   ratingDescBtn.addEventListener('click', () => applyFiltersAndSort('rating-desc'));
 
-  // initial show
+  // initial render
   applyFiltersAndSort();
+
+  // ——— featured carousel + hero rotation ———
+  if (featuredCards.length > 0 && heroTitle && heroSubtitle) {
+    let idx = 0;
+
+    // hide all but first
+    featuredCards.forEach((card,i) => {
+      card.style.opacity = i === 0 ? '1' : '0';
+    });
+
+    // set initial hero to first featured
+    heroTitle.textContent    = featuredCards[0]
+      .querySelector('.featured-title a').textContent;
+    heroSubtitle.textContent = featuredCards[0]
+      .querySelector('.featured-meta').textContent;
+
+    setInterval(() => {
+      // hide current card
+      featuredCards[idx].style.opacity = '0';
+      // advance
+      idx = (idx + 1) % featuredCards.length;
+      // show next
+      featuredCards[idx].style.opacity = '1';
+
+      // update hero header in sync
+      heroTitle.textContent    = featuredCards[idx]
+        .querySelector('.featured-title a').textContent;
+      heroSubtitle.textContent = featuredCards[idx]
+        .querySelector('.featured-meta').textContent;
+    }, 5000);
+  }
 });
