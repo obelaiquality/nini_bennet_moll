@@ -17,22 +17,25 @@ title: Home
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
-  <div class="featured-grid" id="featured-carousel">
-    {% for post in featured_posts %}
-      <div class="featured-card">
-        {% if post.cover %}
-          <img
-            src="{{ post.cover | relative_url }}"
-            alt="{{ post.title }} cover"
-            class="featured-thumb">
-        {% endif %}
-        <h3 class="featured-title">
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h3>
-        <p class="featured-meta">
-          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
-        </p>
-      </div>
+  <div class="featured-carousel">
+    {% for post in site.posts %}
+      {% if post.featured %}
+        <div class="featured-item">
+          {% if post.cover %}
+            <img
+              src="{{ post.cover | relative_url }}"
+              alt="{{ post.title }} cover"
+              class="featured-thumb">
+          {% endif %}
+          <h3 class="featured-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          <p class="featured-meta">
+            deur {{ post.author }} &middot;
+            Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          </p>
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 </section>
