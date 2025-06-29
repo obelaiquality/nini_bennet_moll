@@ -346,3 +346,14 @@ a:hover {
   pointer-events: auto;
   z-index: 1;
 }
+
+/* ── Give our featured carousel a bit more top room so nothing overlaps the “Uitgeligte Resensies” title ───────────────── */
+.section-heading {
+  /* bump this up so the grid sits further below the H2 */
+  margin-bottom: 2rem;   /* ↑ was 1rem */
+}
+
+.featured-grid {
+  /* nudge the flex row down just in case */
+  margin-top: 1rem;
+}
