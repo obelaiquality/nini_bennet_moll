@@ -174,7 +174,7 @@ a:hover {
 .featured-section .featured-card {
   /* absolutely stack each card in the center */
   position: absolute;
-  top: 0;
+  top: 6rem;
   left: 50%;
   transform: translateX(-50%);
   width: 160px;           /* same as your flex-basis */
