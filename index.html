@@ -17,8 +17,7 @@ title: Home
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
-  <div class="featured-grid" id="featured-carousel">
-    {% assign featured_posts = site.posts | where: "featured", true %}
+  <div class="featured-grid">
     {% for post in featured_posts %}
       <div class="featured-card">
         {% if post.cover %}
