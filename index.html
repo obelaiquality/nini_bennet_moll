@@ -19,23 +19,33 @@ title: Home
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
   <div class="featured-grid">
-    {% for post in featured_posts %}
-      <div class="featured-card">
-        {% if post.cover %}
-          <img
-            src="{{ post.cover | relative_url }}"
-            alt="{{ post.title }} cover"
-            class="featured-thumb">
-        {% endif %}
-        <h3 class="featured-title">
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h3>
-        <p class="featured-meta">
-          deur {{ post.author }} &middot;
-          Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
-        </p>
-      </div>
-    {% endfor %}
+    {%- assign featured_posts = site.posts | where: "featured", true -%}
+    <!-- DEBUG: show how many featured posts Jekyll found -->
+    <p style="color:red; font-size:0.9rem;">
+      (Debug: found {{ featured_posts | size }} featured posts)
+    </p>
+
+    {% if featured_posts.size > 0 %}
+      {% for post in featured_posts %}
+        <div class="featured-card">
+          {% if post.cover %}
+            <img
+              src="{{ post.cover | relative_url }}"
+              alt="{{ post.title }} cover"
+              class="featured-thumb">
+          {% endif %}
+          <h3 class="featured-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          <p class="featured-meta">
+            deur {{ post.author }} &middot;
+            Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          </p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Geen uitgeligte resensies gevind nie.</p>
+    {% endif %}
   </div>
 </section>
 {% endif %}
