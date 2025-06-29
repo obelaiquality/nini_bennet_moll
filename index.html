@@ -14,22 +14,28 @@ title: Home
   </div>
 </section>
 
-<!-- FEATURED CAROUSEL -->
+<!-- ————————————————————————————————————————————————————————————————
+     FEATURED CAROUSEL
+——————————————————————————————————————————————————————————————— -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
-  <div class="featured-carousel">
+  <div class="featured-carousel"><!-- this class matches your CSS for the sliding row -->
+
     {% for post in site.posts %}
       {% if post.featured %}
-        <div class="featured-item">
+        <div class="featured-item"><!-- same as your old “featured-card” but with the carousel wrapper -->
+          
           {% if post.cover %}
             <img
               src="{{ post.cover | relative_url }}"
               alt="{{ post.title }} cover"
               class="featured-thumb">
           {% endif %}
+
           <h3 class="featured-title">
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h3>
+
           <p class="featured-meta">
             deur {{ post.author }} &middot;
             Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
@@ -37,6 +43,7 @@ title: Home
         </div>
       {% endif %}
     {% endfor %}
+
   </div>
 </section>
 
