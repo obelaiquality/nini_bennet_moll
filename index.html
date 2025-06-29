@@ -3,13 +3,7 @@ layout: default
 title: Home
 ---
 
-{% comment %}
-  Grab all posts where `featured: true`, then sort by pub date descending
-{% endcomment %}
-{% assign featured_posts = site.posts
-   | where: "featured", true
-   | sort: "publication_date"
-   | reverse %}
+{% assign featured_posts = site.posts | where: "featured", true %}
 
 <!-- HERO -->
 <section class="hero-section">
@@ -21,7 +15,6 @@ title: Home
   </div>
 </section>
 
-{% if featured_posts.size > 0 %}
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
@@ -37,14 +30,14 @@ title: Home
         <h3 class="featured-title">
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
+        <!-- ← New line: always show author & publication_date -->
         <p class="featured-meta">
-          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
         </p>
       </div>
     {% endfor %}
   </div>
 </section>
-{% endif %}
 
 <div class="page-content">
 
@@ -52,11 +45,7 @@ title: Home
   <aside class="sidebar">
     <div class="filters">
       <h2>Filter</h2>
-
-      <!-- Search -->
       <input type="text" id="search" placeholder="Soek resensies…">
-
-      <!-- Author -->
       <select id="author-filter">
         <option value="">Alle skrywers</option>
         {% assign authors = site.posts | map: "author" | uniq | sort %}
@@ -64,8 +53,6 @@ title: Home
           <option value="{{ author }}">{{ author }}</option>
         {% endfor %}
       </select>
-
-      <!-- Genre -->
       <select id="genre-filter">
         <option value="">Alle genres</option>
         {% assign genres = site.posts | map: "genre" | uniq | sort %}
@@ -73,8 +60,6 @@ title: Home
           <option value="{{ g }}">{{ g }}</option>
         {% endfor %}
       </select>
-
-      <!-- Tags -->
       <select id="tag-filter">
         <option value="">Alle onderwerpe</option>
         {% assign tags = site.posts | map: "tags" | flatten | uniq | sort %}
@@ -82,8 +67,6 @@ title: Home
           <option value="{{ tag }}">{{ tag }}</option>
         {% endfor %}
       </select>
-
-      <!-- Rating -->
       <select id="rating-filter">
         <option value="">Alle graderings</option>
         {% for i in (0..10) %}
@@ -91,8 +74,6 @@ title: Home
           <option value="{{ val }}">{{ val }}+</option>
         {% endfor %}
       </select>
-
-      <!-- Publication Year -->
       {% assign years = "" | split: "" %}
       {% for p in site.posts %}
         {% assign y = p.publication_date | date: "%Y" %}
@@ -105,13 +86,11 @@ title: Home
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
-
     </div>
   </aside>
 
   <!-- MAIN CONTENT & SORT CONTROLS -->
   <main>
-    <!-- Dropdown sort -->
     <div class="sort-controls">
       <label for="sort-order">Sorteer op:</label>
       <select id="sort-order">
@@ -121,8 +100,6 @@ title: Home
         <option value="low-rating">Laagste graderings</option>
       </select>
     </div>
-
-    <!-- A→Z & ★ sort buttons -->
     <div class="extra-sort-controls">
       <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
       <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
@@ -130,7 +107,6 @@ title: Home
       <button id="sort-rating-desc"class="btn btn-secondary">★ ↓</button>
     </div>
 
-    <!-- REVIEW GRID -->
     <div class="reviews">
       {% for post in site.posts %}
         <article
@@ -142,34 +118,28 @@ title: Home
           data-year="{{ post.publication_date | date: '%Y' }}"
           data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
           data-excerpt="{{ post.excerpt | strip_html | escape }}">
-          
+
           {% if post.cover %}
             <img
               src="{{ post.cover | relative_url }}"
               alt="{{ post.title }} cover"
               class="cover-thumb">
           {% endif %}
-          
           <h2>
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
-          
           <p class="meta">
             deur {{ post.author }} — Resenseer:
             {{ post.date | date: '%b %d, %Y' }}
           </p>
-          
           <p class="meta">
             Gepubliseer:
             {{ post.publication_date | date: '%Y-%m-%d' }}
           </p>
-          
           {% if post.rating %}
             <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
-          
           <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-          
           <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
             Lees Meer
           </a>
