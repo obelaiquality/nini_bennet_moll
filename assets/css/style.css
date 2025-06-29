@@ -117,21 +117,11 @@ a:hover {
 /* ── Featured Carousel ───────────────────────────────── */
 /* ── Wider Featured Carousel ───────────────────────────────── */
 .featured-section {
-  /* span the *entire* viewport, ignoring any container max-width */
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  width: 100vw;
-  max-width: none;
-
-  /* add your usual padding */
-  padding: 2rem 1.5rem;
-  box-sizing: border-box;
-
-  /* keep your background/color rules */
-  background: var(--bg-light);
+  /* choose whatever total height works for you (header + thumbnails + titles) */
+  min-height: 550px;
+  /* hide anything that sticks out */
+  overflow: hidden;
+  /* if you’d rather have a scrollbar instead: overflow: auto; */
 }
 
 .theme-dark .featured-section {
@@ -147,10 +137,7 @@ a:hover {
 
 /* ── Featured Carousel ────────────────────────────────── */
 .featured-grid {
-  justify-content: flex-start !important;
-  gap: 1.5rem !important;
-  overflow-x: auto !important;
-  padding-bottom: 1rem !important;
+  padding-bottom: 1rem;
 }
 
 .featured-card {
