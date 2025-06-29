@@ -141,8 +141,14 @@ a:hover {
 }
 
 .featured-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* allow the card itself to grow for your long titles */
   flex: 0 0 auto;
-  min-width: 160px;
+  min-width: 240px;
+  max-width: 300px;
+  /* keep all your existing padding / background / box-shadow etc */
 }
 
 /* Make the author & date visible in dark mode too */
@@ -177,14 +183,13 @@ a:hover {
   opacity: 1;
 }
 
-
-
+/* lock the image to its “nice” size so it doesn’t stretch */
 .featured-thumb {
-  width: 160px;
-  height: 220px;
-  object-fit: cover;
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.75rem;
   border-radius: 4px;
-  margin: 0 auto;
 }
 
 .featured-title {
