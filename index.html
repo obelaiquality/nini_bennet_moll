@@ -4,7 +4,7 @@ title: Home
 ---
 
 {% comment %}
-  Fetch all posts where `featured: true`, sort by publication_date (newest first)
+  Grab all posts where `featured: true`, then sort by pub date descending
 {% endcomment %}
 {% assign featured_posts = site.posts
    | where: "featured", true
@@ -38,8 +38,7 @@ title: Home
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
         <p class="featured-meta">
-          deur {{ post.author }} &middot;
-          Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
         </p>
       </div>
     {% endfor %}
@@ -100,13 +99,13 @@ title: Home
         {% assign years = years | push: y %}
       {% endfor %}
       {% assign years = years | uniq | sort %}
-
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% for y in years %}
           <option value="{{ y }}">{{ y }}</option>
         {% endfor %}
       </select>
+
     </div>
   </aside>
 
@@ -128,7 +127,7 @@ title: Home
       <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
       <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
       <button id="sort-rating-asc" class="btn btn-secondary">★ ↑</button>
-      <button id="sort-rating-desc" class="btn btn-secondary">★ ↓</button>
+      <button id="sort-rating-desc"class="btn btn-secondary">★ ↓</button>
     </div>
 
     <!-- REVIEW GRID -->
@@ -142,36 +141,35 @@ title: Home
           data-rating="{{ post.rating }}"
           data-year="{{ post.publication_date | date: '%Y' }}"
           data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
-          data-excerpt="{{ post.excerpt | strip_html | escape }}"
-        >
+          data-excerpt="{{ post.excerpt | strip_html | escape }}">
+          
           {% if post.cover %}
             <img
               src="{{ post.cover | relative_url }}"
               alt="{{ post.title }} cover"
-              class="cover-thumb"
-            >
+              class="cover-thumb">
           {% endif %}
-
+          
           <h2>
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
-
+          
           <p class="meta">
             deur {{ post.author }} — Resenseer:
             {{ post.date | date: '%b %d, %Y' }}
           </p>
-
+          
           <p class="meta">
             Gepubliseer:
             {{ post.publication_date | date: '%Y-%m-%d' }}
           </p>
-
+          
           {% if post.rating %}
             <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
-
+          
           <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-
+          
           <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
             Lees Meer
           </a>
