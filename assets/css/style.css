@@ -148,9 +148,34 @@ a:hover {
   text-align: center;
 }
 
+/* ——— Stack featured cards for proper click handling ——— */
+.featured-section .featured-grid {
+  /* stop flex layout and hide overflow */
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* set this to roughly your card’s total height */
+  height: 300px; 
+}
+
+.featured-section .featured-card {
+  /* absolutely stack each card in the center */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;           /* same as your flex-basis */
+  opacity: 0;             /* hide by default */
+  transition: opacity .5s ease;
+}
+
+/* the JS already sets inline opacity=1 for the “current” card */
 .featured-card.active {
   opacity: 1;
 }
+
+
 
 .featured-thumb {
   width: 160px;
