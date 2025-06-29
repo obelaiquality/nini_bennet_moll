@@ -18,6 +18,7 @@ title: Home
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
   <div class="featured-grid" id="featured-carousel">
+    {% assign featured_posts = site.posts | where: "featured", true %}
     {% for post in featured_posts %}
       <div class="featured-card">
         {% if post.cover %}
@@ -29,9 +30,8 @@ title: Home
         <h3 class="featured-title">
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
-        <!-- ← this is the new block -->
         <p class="featured-meta">
-          deur {{ post.author }} &middot;  
+          deur {{ post.author }} &middot;
           Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
         </p>
       </div>
