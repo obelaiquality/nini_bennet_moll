@@ -147,10 +147,10 @@ a:hover {
 
 /* ── Featured Carousel ────────────────────────────────── */
 .featured-grid {
-  justify-content: flex-start;   /* instead of centering, start at the left edge */
-  gap: 1.5rem;                   /* wider gutters if you like */
-  overflow-x: auto;
-  padding-bottom: 1rem;          /* extra space under the cards */
+  justify-content: flex-start !important;
+  gap: 1.5rem !important;
+  overflow-x: auto !important;
+  padding-bottom: 1rem !important;
 }
 
 .featured-card {
@@ -170,14 +170,16 @@ a:hover {
 }
 
 /* ——— Stack featured cards for proper click handling ——— */
-.featured-section .featured-grid {
-  /* stop flex layout and hide overflow */
-  display: block;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  /* set this to roughly your card’s total height */
-  height: 300px; 
+.featured-section {
+  position: relative !important;
+  left: 50% !important;
+  right: auto   !important;
+  width: 100vw  !important;
+  max-width: none !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  padding: 2rem 1rem !important;
+  box-sizing: border-box !important;
 }
 
 .featured-section .featured-card {
