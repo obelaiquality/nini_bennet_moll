@@ -17,7 +17,7 @@ title: Home
 <!-- FEATURED CAROUSEL -->
 <section class="featured-section">
   <h2 class="section-heading">Uitgeligte Resensies</h2>
-  <div class="featured-grid">
+  <div class="featured-grid" id="featured-carousel">
     {% for post in featured_posts %}
       <div class="featured-card">
         {% if post.cover %}
@@ -30,8 +30,7 @@ title: Home
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
         <p class="featured-meta">
-          deur {{ post.author }} &middot;
-          Gepubliseer: {{ post.publication_date | date: "%Y-%m-%d" }}
+          deur {{ post.author }} &middot; Gepubliseer: {{ post.publication_date | date: '%Y-%m-%d' }}
         </p>
       </div>
     {% endfor %}
@@ -86,11 +85,12 @@ title: Home
 
       <!-- Publication Year -->
       {% assign years = "" | split: "" %}
-      {% for p in site.posts %}
-        {% assign y = p.publication_date | date: "%Y" %}
+      {% for post in site.posts %}
+        {% assign y = post.publication_date | date: "%Y" %}
         {% assign years = years | push: y %}
       {% endfor %}
       {% assign years = years | uniq | sort %}
+
       <select id="year-filter">
         <option value="">Alle publikasiejare</option>
         {% for y in years %}
@@ -111,6 +111,14 @@ title: Home
         <option value="high-rating">Beste graderings</option>
         <option value="low-rating">Laagste graderings</option>
       </select>
+    </div>
+
+    <!-- A→Z & ★ sort buttons -->
+    <div class="extra-sort-controls">
+      <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
+      <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
+      <button id="sort-rating-asc" class="btn btn-secondary">★ ↑</button>
+      <button id="sort-rating-desc"class="btn btn-secondary">★ ↓</button>
     </div>
 
     <!-- REVIEW GRID -->
