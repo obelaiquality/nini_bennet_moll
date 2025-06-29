@@ -9,11 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortOrder     = document.getElementById('sort-order');
   const reviewsParent = document.querySelector('.reviews');
 
-  // hero elements
-  const heroTitle     = document.querySelector('.hero-title');
-  const heroSubtitle  = document.querySelector('.hero-subtitle');
-
-  // featured carousel elements
+  // only the carousel section below hero
   const featuredGrid  = document.getElementById('featured-carousel');
   const featuredCards = featuredGrid
     ? Array.from(featuredGrid.querySelectorAll('.featured-card'))
@@ -90,34 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // initial render
   applyFiltersAndSort();
 
-  // ——— featured carousel + hero rotation ———
-  if (featuredCards.length > 0 && heroTitle && heroSubtitle) {
+  // ——— featured-carousel rotation only ———
+  if (featuredCards.length > 0) {
     let idx = 0;
-
-    // hide all but first
-    featuredCards.forEach((card,i) => {
+    // show only the first card
+    featuredCards.forEach((card, i) => {
       card.style.opacity = i === 0 ? '1' : '0';
     });
-
-    // set initial hero to first featured
-    heroTitle.textContent    = featuredCards[0]
-      .querySelector('.featured-title a').textContent;
-    heroSubtitle.textContent = featuredCards[0]
-      .querySelector('.featured-meta').textContent;
-
+    // rotate every 5s
     setInterval(() => {
-      // hide current card
       featuredCards[idx].style.opacity = '0';
-      // advance
       idx = (idx + 1) % featuredCards.length;
-      // show next
       featuredCards[idx].style.opacity = '1';
-
-      // update hero header in sync
-      heroTitle.textContent    = featuredCards[idx]
-        .querySelector('.featured-title a').textContent;
-      heroSubtitle.textContent = featuredCards[idx]
-        .querySelector('.featured-meta').textContent;
     }, 5000);
   }
 });
