@@ -2,6 +2,7 @@
 layout: default
 title: Home
 ---
+
 {% assign featured_posts = site.posts | where: "featured", true %}
 
 <!-- HERO -->
@@ -20,6 +21,7 @@ title: Home
   <div class="featured-grid" id="featured-carousel">
     {% for post in featured_posts %}
       <div class="featured-card">
+
         {% if post.cover %}
           <img
             src="{{ post.cover | relative_url }}"
@@ -31,13 +33,14 @@ title: Home
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h3>
 
-        <!-- ←–– This is the new block that shows author + publication date ––→ -->
+        <!-- ← This is the new bit -->
         <p class="featured-meta">
           deur {{ post.author }}
           &middot;
           Gepubliseer:
           {{ post.publication_date | date: "%Y-%m-%d" }}
         </p>
+
       </div>
     {% endfor %}
   </div>
@@ -119,7 +122,7 @@ title: Home
       </select>
     </div>
 
-    <!-- Extra sort buttons -->
+    <!-- A→Z & ★ sort buttons -->
     <div class="extra-sort-controls">
       <button id="sort-alpha-asc"  class="btn btn-secondary">A → Z</button>
       <button id="sort-alpha-desc" class="btn btn-secondary">Z → A</button>
@@ -139,34 +142,34 @@ title: Home
           data-year="{{ post.publication_date | date: '%Y' }}"
           data-review-date="{{ post.date | date: '%Y-%m-%d' }}"
           data-excerpt="{{ post.excerpt | strip_html | escape }}">
-
+          
           {% if post.cover %}
             <img
               src="{{ post.cover | relative_url }}"
               alt="{{ post.title }} cover"
               class="cover-thumb">
           {% endif %}
-
+          
           <h2>
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
-
+          
           <p class="meta">
             deur {{ post.author }} — Resenseer:
             {{ post.date | date: '%b %d, %Y' }}
           </p>
-
+          
           <p class="meta">
             Gepubliseer:
             {{ post.publication_date | date: '%Y-%m-%d' }}
           </p>
-
+          
           {% if post.rating %}
             <p class="rating">★ {{ post.rating }}</p>
           {% endif %}
-
+          
           <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
-
+          
           <a href="{{ post.url | relative_url }}" class="btn btn-secondary">
             Lees Meer
           </a>
